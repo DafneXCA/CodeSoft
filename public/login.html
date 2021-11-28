@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/formularios.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <title>Iniciar Sesión | Contabilidad para Todos</title>
+</head>
+
+<body>
+  <div class="grid"> 
+    <!-- INICIO DEL HEADER -->
+
+    <header class="header">
+      <div class="contenedor head">
+        <a href="../index.html" class="logo">
+          <img src="../img/Logo.png" alt="LogoContabilidad" />
+        </a>
+        <h3 class="tituloPlataforma">
+          Contabilidad para <br />
+          Todos
+        </h3>
+
+        <!-- <nav class="menu"> 
+                <a href="#">Cursos</a>
+                <a href="#">Biblioteca</a>
+            </nav> -->
+
+            <a href="../index.html" class="BtnHome">
+              <span class="material-icons-outlined IconHome"> home </span>
+              <p class="Home">Inicio</p>
+            </a>
+      </div>
+
+    </header>
+
+      <!-- FIN DEL HEADER -->
+
+      <!-- INICIO SECCION FORMULARIO -->
+
+      <section class="formulario">
+        <div class="contenedor">
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <h1 class="tituloIniciarSesion">Iniciar Sesión</h1> 
+                <form role="form">
+                  <div class="CajaFormulario">
+                    <div class="ElementosFormulario">
+                      <div class="form-group">
+                        <label >Correo Electrónico</label> 
+                        <input type="email" placeholder="Ingrese el correo electrónico" class="form-control" id="Correo">
+                      </div>
+                      <div class="form-group">
+                        <label >Contraseña</label> 
+                        <span class="material-icons-outlined IconEye" id="Eye">visibility</span>
+                        <input type="password" placeholder="Ingrese la Contraseña" class="form-control passwd" id="Contraseña">
+                      </div>
+                      <div><br>
+                          <label class="btn btn-lg btn-primary btn-block" id="Sesion" ><strong>Iniciar Sesión</strong></label><br>
+                          <p class="text-muted text-center">
+                              <small>¿Aún no tiene cuenta?</small>
+                          </p>
+                          <a class="btn btn-lg btn-default btn-block" href="registro.html">Registrarse</a>
+                          <a href="recuperarContraEst.html">
+                            <p class="RecPassword" id="RecPassword">¿Olvidó su Contraseña?</p>
+                          </a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="col-sm-4">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FIN SECCION BIENVENIDA -->
+
+    
+    
+  </div>
+  <script src="../js/login.js"></script>
+  <script src="../js/MostrarContraseña.js"></script>
+</body>
+
+</html>

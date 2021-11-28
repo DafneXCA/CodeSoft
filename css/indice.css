@@ -1,0 +1,15 @@
+.temario{
+    border: black 3px solid;
+    width: 397px;
+}
+.titulo-temario{
+    text-align: center;
+}
+.subtema, .tema{
+    border:#000 3px solid;
+    border-bottom: none;
+    padding: 10px;
+}
+.subtema{
+    margin-left: 24px;
+}

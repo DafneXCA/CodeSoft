@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/formularios.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <title>Registrar Docente | Contabilidad para todos</title>
+  <!-- @jhon scrips para la base de datos y para mensajes de confirmacion(todavia no funcional el mensaje)-->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="grid"> 
+    <!-- INICIO DEL HEADER -->
+    <header class="header">
+      <div class="contenedor head">
+        <a href="../public/IndexAdmonistrador.html"  class="logo">
+          <img src="../img/Logo.png" alt="LogoContabilidad" />
+        </a>
+        <h3 class="tituloPlataforma">
+          Contabilidad para <br />
+          Todos
+        </h3>
+        <!-- <nav class="menu"> 
+                <a href="#">Cursos</a>
+                <a href="#">Biblioteca</a>
+            </nav> -->
+            <a href="../public/IndexAdmonistrador.html"  class="BtnHome">
+              <span class="material-icons-outlined IconHome"> home </span>
+              <p class="Home">Inicio</p>
+            </a>
+      </div>
+    </header>
+      <!-- FIN DEL HEADER -->
+      <!-- INICIO SECCION BIENVENIDA -->
+      <section class="formulario">
+        <div class="contenedor">
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <h1 class="tituloRegistrarse">Registrar <br> Docente</h1> 
+      <!--      <form role="form">    @jhon esto era lo que no dejaba subir a base de datos -->
+                  <div class="CajaFormulario"> 
+                    <div class="ElementosFormulario">
+                      <!-- @jhon coloque un id cada campo y al boton para utilizarlos -->
+                      <div class="form-group">
+                        <label>Nombre Completo</label> 
+                        <input id="nombre" type="text" placeholder="Ingrese el nombre completo " class="form-control" onkeypress="return sololetras(event)">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Correo Electrónico</label> 
+                        <input id="correo" type="text" placeholder="Ingrese el correo electrónico" class="form-control">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Contraseña</label> 
+                        <span class="material-icons-outlined IconEye" id="Eye">visibility</span>
+                        <input id="contraseña" type="password" placeholder="Ingrese la contraseña" class="form-control passwd" >
+                        
+                      </div>
+
+                      <div class="form-group">
+                        <label>Repetir Contraseña</label> 
+                        <span class="material-icons-outlined IconEye1" id="Eye">visibility</span>
+                        <input id="repcontraseña" type="password" placeholder="Repita la Contraseña" class="form-control passwd">
+
+                      </div>
+
+                      <div><br>
+                          <button id="btnsave" class="btn btn-lg btn-primary btn-block" type="submit"><strong>Registrar</strong></button><br>
+                          
+                      </div>
+                     <!-- <a href="recuperarPassword.html">
+                        <p class="RecPassword" id="RecPassword">¿Olvido su Contraseña?</p>
+                      </a>
+                    -->
+                      <p class="warnings" id="warnings"></p>
+                    </div>
+                  </div>
+               
+            </div>
+          </div>
+        </div> 
+      </section>
+      <!-- FIN SECCION BIENVENIDA -->
+
+  </div>
+
+</body>
+<script>
+  function sololetras(e){
+    key= e.keyCode || e.which;
+    teclado= String.fromCharCode(key).toLowerCase();
+    letras=" abcdefghijgklmnopqrstuvwqyz";
+    especiales="8-37-38-46-164";
+    teclado_especial=false;
+    for(var i in especiales){
+      if (key==especiales[i]) {
+        teclado_especial=true;
+        break;
+       }
+     }
+     if (letras.indexOf(teclado)==-1 && !teclado_especial) {
+       return false;
+       
+     }
+  }
+</script>
+
+<!-- @jhon scrip de admin y de jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="../js/docenteDB.js"></script>    
+<script src="../js/MostrarContraseña.js"></script>
+<script src="../js/redireccion.js"></script>
+</html>

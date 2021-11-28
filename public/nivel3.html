@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../css/Nivel.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+    <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Nivel 3</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>  
+</head>
+<body>
+    <div id="contenedor_carga">
+        <div id="carga"></div>
+    </div>
+
+    <header>
+        <div class="contenedor head">
+
+            <label class="material-icons-outlined Menu" id="B-I">
+                menu
+                </label>
+            
+
+                <label href="../index.html" class="logo">
+                    <img src="../img/Logo.png" alt="LogoContabilidad" />
+                  </label>
+            <h3 class="numniv">NIVEL 3</h3>
+        
+            <label class="BtnHome">
+                <span class="material-icons-outlined IconHome"> home </span>
+                <p class="Home">Inicio</p>
+            </label>
+        </div>
+    </header>
+    <section class="TemarioNivel">
+        <div class="contenedor">       
+                    <section class="indice" id="IND">
+                        <label id="Temario" class="Temario">Temario</label>
+                        <ul id="Temas">
+                        </ul>
+                        <label id="Nuevo tema">+ Nuevo tema</label>
+                    </section>
+        
+                    <section class="contenido" id="cont">
+                        
+                    </section>
+
+        </div>
+    </section>
+    
+    <script src="../js/Indice.js"></script>
+    <script src="../js/baseDatosNiv3.js"></script>
+  <script src="../js/IniciarTemasNiv3.js"></script>
+  <script src="../js/SubtemasNiv3.js"></script>
+    <script src="../js/redireccion.js"></script>
+    <script src="../js/indiceNiveles.js"></script>
+    <script src="../js/Pant_carga.js"></script>
+</body>
+</html>

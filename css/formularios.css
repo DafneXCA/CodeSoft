@@ -1,0 +1,228 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to bottom, #3a287a, #00429b, #006dba, #0095ce, #2dbcdc);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* Header */
+
+header{
+    /* background-color: #1D2731; */
+    width: 100%;
+    height: auto;
+    padding: 15px 0;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.contenedor{
+    width: 90%;
+    max-width: 1410px;
+    margin: auto;
+}
+
+.head{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    height: auto;
+}
+
+.logo{
+    width: 70px;
+    margin-right: 20px;
+}
+
+.logo img{
+    width: 100%;
+}
+
+.tituloPlataforma{
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+
+
+
+.BtnHome{
+    display: flex;
+    align-items:flex-end;
+    margin-left: auto;
+    
+}
+
+.IconHome{
+    font-family: 'Material icons';
+    font-size: 35px;
+    color: #ffffff;
+    
+}
+
+.IconHome:hover{
+    color: #ffc400;
+}
+
+.Home{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 10px;
+    color: #eff3f5;
+    position: relative;
+    
+}
+
+.Home::before{
+    content: "";
+    position: absolute;
+    width: 100%; height: 2px;
+    background-color: #ffc400;
+    border-radius: 100px;
+    bottom: -2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+}
+
+.Home:hover::before{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+
+/* FIN HEADER */
+
+/* INICIO FORMULARIO */
+
+.formulario{
+    /* background-color: #0B3C5D; */
+    padding: 100px 0 262px 0;
+    width: 100%;
+    height: auto;
+}
+
+.CajaFormulario{
+    background-color: hsl(0, 100%, 50%, .1);
+    max-width: 500px;
+    margin-top: 50px;
+    border-radius: 10px;
+
+}
+
+
+.tituloIniciarSesion{
+    text-align: center;
+    color: #ffffff;
+}
+
+.tituloRegistrarse{
+    text-align: center;
+    color: #ffffff;
+}
+
+.ElementosFormulario{
+    padding: 30px;
+}
+
+.form-group{
+    position: relative;
+}
+
+.form-group > label{
+    
+    color: #ffffff;
+}
+
+.IconEye, .IconEye1{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-15%);
+    color: #030303;
+    font-size: 25px;
+    opacity: 0.4;
+    cursor: pointer;
+    font-family: 'Material icons';
+}
+
+.IconEye:hover, .IconEye1:hover{
+    transition: 0.9s;
+    opacity: 0.9;
+    color: #158a99;
+}
+
+.text-muted{
+    color: #e3e0e6af;
+}
+
+.btn-primary{
+    background-color:#1e6091;
+    border-color: #2e6da4;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover{ 
+    transform: scale(1.04);
+}
+.warnings{
+    width: 200px;
+    text-align: center;
+    margin: auto;
+    color:#ffffff;
+    padding-top: 20px;
+}
+
+/* Fin seccion formulario */
+
+.warnings{
+    width: 200px;
+    text-align: center;
+    margin: auto;
+    color:#ffffff;
+    padding-top: 20px;
+}
+.RecPassword{
+    width: 200px;
+    text-align: center;
+    margin: auto;
+    color:#ffffff;
+    padding-top: 20px; 
+}
+.RecPassword:hover{
+    color: #ffc400;
+}
+
+.Volver:hover{
+    color: #ffc400;
+}
+.Volver{
+    width: 50px;
+    margin-right: 20px;
+}
+.titulo{
+    text-align: center;
+    color: #eff3f5;
+}
+.tabla1{
+    margin-bottom: auto;
+    margin: 30px;
+    font-size: 16px;
+}

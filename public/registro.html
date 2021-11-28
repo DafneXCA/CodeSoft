@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/formularios.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <title>Contabilidad para todos</title>
+</head>
+
+<body>
+  <div class="grid"> 
+    <!-- INICIO DEL HEADER -->
+
+    <header class="header">
+      <div class="contenedor head">
+        <a href="../index.html" class="logo">
+          <img src="../img/Logo.png" alt="LogoContabilidad" />
+        </a>
+        <h3 class="tituloPlataforma">
+          Contabilidad para <br />
+          Todos
+        </h3>
+
+        <!-- <nav class="menu"> 
+                <a href="#">Cursos</a>
+                <a href="#">Biblioteca</a>
+            </nav> -->
+
+            <a href="../index.html" class="BtnHome">
+              <span class="material-icons-outlined IconHome"> home </span>
+              <p class="Home">Inicio</p>
+            </a>
+      </div>
+
+    </header>
+
+      <!-- FIN DEL HEADER -->
+
+      <!-- INICIO SECCION BIENVENIDA -->
+
+      <section class="formulario">
+        <div class="contenedor">
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <h1 class="tituloRegistrarse">Registrarse</h1> 
+                <form role="form">
+                  <div class="CajaFormulario">
+                    <div class="ElementosFormulario">
+                      <div class="form-group">
+                        <label>Nombre Completo</label> 
+                        <input type="text" placeholder="Ingrese el nombre completo " class="form-control" id="Nombre">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>Correo Electrónico</label> 
+                        <input type="email" placeholder="Ingrese el correo electrónico" class="form-control" id="Correo">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Contraseña</label> 
+                        <span class="material-icons-outlined IconEye" id="Eye">visibility</span>
+                        <input type="password" placeholder="Ingrese la contraseña" class="form-control passwd" id="Contraseña">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Repetir Contraseña</label> 
+                        <span class="material-icons-outlined IconEye1" id="Eye">visibility</span>
+                        <input type="password" placeholder="Repita la contraseña" class="form-control passwd" id="Repetir">
+                      </div>
+                      <div>
+                        <h5 class="alerta">Llene todos los espacios vacíos</h5>
+                        <h5 class="alerta">Contraseña muy corta</h5>
+                        <h5 class="alerta">Las contraseñas son distintas</h5>
+                        <h5 class="alerta">El email no es válido</h5>
+                        <h5 class="alerta">La contraseña es muy larga</h5>
+                        <h5 class="alerta">Nombre no válido</h5>
+                        <h5 class="alerta" >Nombre muy corto</h5>
+                        <h5 class="alerta">Nombre muy largo</h5>
+                      </div>
+                      <div><br>
+                        <label class="btn btn-lg btn-primary btn-block" type="submit" id="Registrar"><strong>Registrarse</strong></label><br>
+                        <p class="text-muted text-center">
+                            <small>¿Ya tienes cuenta?</small>
+                        </p>
+                        <a class="btn btn-lg btn-default btn-block" href="login.html">Iniciar Sesión</a>  
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FIN SECCION BIENVENIDA -->
+
+  </div>
+  <script src="../js/registro.js"></script>
+  <script src="../js/MostrarContraseña.js"></script>
+</body>
+
+</html>
