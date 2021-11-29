@@ -7,7 +7,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
   
-  <link rel="stylesheet" href="../css/formularios.css" />
+  <link rel="stylesheet" href="../css/perfilEst.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
   <script type="text/javascript" src="../js/prefixfree.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,6 +21,8 @@
   <title>Perfil Estudiante | Contabilidad para todos</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,21 @@
           <!-- SECCIÓN PERFIL DE ESTUDIANTE -->
 
           <section class="Perfil">
-            <div class="contenedor">
+            <div class="contenedor" id="contenido">
+              <br>
+              <h1 id="Saludo">Bienvenido</h1>
+              <h2>Datos personales:</h2>
+              <label >Nombre:</label><label id="Nombre"></label><input type="text" id="NombreE">
+              <br>
+              <label>Contraseña:</label><label id="Contraseña"></label> <input type="text" id="ContraseñaE">
+              <br>
+              <label>Correo:    </label><label id="Correo"></label>
+              <br>
+              <br>
+              <label id="Eliminar" >Eliminar cuenta</label>
+              <label id="Cancelar"> Cancelar</label>
+              <label id="Editar">Editar datos</label>
+              
 
             </div>
 
@@ -58,6 +74,7 @@
           </section>
 
 
+          <script src="../js/Perfil_Estudiante.js"></script>
 </body>
 
 </html>

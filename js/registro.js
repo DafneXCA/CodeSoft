@@ -91,11 +91,25 @@ Registrar.onclick=function(){
             let Correo= correo.value;
             let Contraseña= contraseña.value;
             let Rol="Estudiante";
-            const Usuario={Nombre, Correo,Contraseña,Rol};
+            let Nivel1= "NO";
+            let Nota1=0;
+            let Nivel2= "NO";
+            let Nota2=0;
+            let Nivel3= "NO";
+            let Nota3=0;
+            const Usuario={Nombre, Correo,Contraseña,Rol,Nivel1,Nota1,Nivel2,Nota2,Nivel3,Nota3};
             GuardarUsuario(Usuario);
             localStorage.setItem("Sesion","Activo");
             localStorage.setItem("Nombre",Nombre)
             localStorage.setItem("Rol","Estudiante")
+            localStorage.setItem("Nivel1","NO");
+            localStorage.setItem("Nivel2","NO");
+            localStorage.setItem("Nivel3","NO");
+            localStorage.setItem("Nota1","0");
+            localStorage.setItem("Nota2","0");
+            localStorage.setItem("Nota3","0");
+            localStorage.setItem("Correo", correo.value);
+            localStorage.setItem("Contraseña", contraseña.value);
             //location.href="../public/index.html";
             alert("Registrado correctamente");
             setTimeout(()=>{location.href="../index.html";},2000);   
@@ -116,6 +130,8 @@ Registrar.onclick=function(){
      }
      return encontrado;
  }
+
+ 
 
     
     
