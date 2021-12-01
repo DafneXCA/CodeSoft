@@ -80,7 +80,25 @@ if (localStorage.getItem("Rol") == "Estudiante") {
         }
         //calificar
         var nota=(100/PregC.length)*calificacion;
-        console.log(nota);
+        localStorage.setItem("Nota1", nota);
+        localStorage.setItem("Nivel1","SI");
+        //guardar nota en perfil
+        db.collection("Usuarios").doc(localStorage.getItem("Id")).update({
+            Usuario: 
+            {Nombre: localStorage.getItem("Nombre"),
+            Correo: localStorage.getItem("Correo"),
+            Contraseña: localStorage.getItem("Contraseña"),
+            Rol: "Estudiante",
+            Nivel1: localStorage.getItem("Nivel1"),
+            Nivel2: localStorage.getItem("Nivel2"),
+            Nivel3: localStorage.getItem("Nivel3"),
+            Nota1: localStorage.getItem("Nota1"),
+            Nota2: localStorage.getItem("Nota2"),
+            Nota3: localStorage.getItem("Nota3")
+            
+            }
+        })
+        setTimeout(()=>{window.location.reload();},1000); 
     }
 }else{
     BAceptar.onclick = function () {
@@ -259,8 +277,16 @@ db.collection("Examen1").get().then(function (BaseExamen1) {
         });
     });
     console.log(Preguntas);
-    CargarPreguntas();
+    if(localStorage.getItem("Nivel1")=="NO"){
+        CargarPreguntas();
     cont.appendChild(examen);
+    }else{
+        var mensaje= document.createElement("div");
+        mensaje.innerHTML="Usted ya rindio el examen del Nivel 1";
+        mensaje.id="mensaje";
+        cont.appendChild(mensaje);
+    }
+    
 
 
 }
