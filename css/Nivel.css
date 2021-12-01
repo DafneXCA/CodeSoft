@@ -6,7 +6,7 @@
 
 body{
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(to bottom, #3a287a, #00429b, #006dba, #0095ce, #2dbcdc);
+   
 }
 
 /* Inicio HEADER */
@@ -16,6 +16,7 @@ header{
     /* background-color: #1D2731; */
     width: 100%;
     height: auto;
+    
 
 }
 
@@ -60,7 +61,10 @@ header{
 h3{
     color: #eff3f5;
 }
-
+.numniv{
+   
+    color: #ffffff;
+}
 .BtnHome{
     display: flex;
     align-items: flex-end;
@@ -110,8 +114,10 @@ h3{
 /* INICIO SECCION TEMAS */
 
 .Temario{
-    color: #ffc400;
+    color: #ffffff;
     cursor: pointer;
+    border-bottom: 2px solid #ffffff;
+    
 }
 
 .TemarioNivel{
@@ -123,7 +129,7 @@ h3{
     /* height: auto;  --> Cambiar cuando terminen de implementar todo  */
 }
 .indice{
-    background-color: #181b32d6;
+    background-color: #121824f7;
     float: left;
     margin-top: 3%;
     width: 25%;
@@ -132,6 +138,7 @@ h3{
     border-radius: 40px 5px 5px 40px;
     overflow: hidden;
     overflow-y:scroll;
+    box-shadow: 15px 15px 10px -6px black;
 }
 
 
@@ -141,18 +148,27 @@ h3{
 }
 
 h2{
-    color: #878fb8;
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+    
+   
+}
+
+.TemaC h2{
+    box-shadow: 0px 8px 10px -6px black;
 }
 
 h3{
-    color: #ffffff;
+    color: #65abda;
     margin-top: 20px;
     margin-left: 20px;
+   
 }
 
 h4{
     color: #eff3f5;
 }
+
 p{
     color: #cccbcb;
     font-size: 16px;
@@ -164,7 +180,7 @@ p{
 }
 .contenido{
     /* background-color: #2c2f48; */
-    background-color: #181b32d6;
+    background-color: #121824f7;
     border-radius: 40px 5px 5px 40px;
     margin-left: 5%;
     margin-top: 3%;
@@ -173,6 +189,10 @@ p{
     padding: 24px;
     overflow: hidden;
     overflow-y:scroll;
+    box-shadow: 15px 15px 10px -6px black;
+    
+  
+    
 }
 
 img{
@@ -184,17 +204,17 @@ img{
 
 ul{
     padding-left: 3%;
-    color: #0bd4c1;
+    color: #cccbcb;
 }
 
 li{
-    color: #0bd4c1;
+   
     margin-left: 35px;
     margin-top: 4px;
 }
 a{
     text-decoration: none;
-    color: #ffffff;
+    color: #b8b8b8;
 }
 
 strong{
@@ -209,6 +229,27 @@ strong{
 .subtitulo{
     margin-top: 30px;
     margin-left: 40px;
+}
+
+.contestar{
+    border-radius:40px ;
+    border: 1px solid white;
+    
+  
+    padding : 3%;
+    margin: 4%;
+    
+}
+.pmRes{
+    margin: 8%;
+   
+}
+.labRes{
+    color: #cccbcb;
+}
+.ImgPreg{
+    width: 90%;
+    height: auto;
 }
 .contenido::-webkit-scrollbar{
     width: 10px;
@@ -232,7 +273,8 @@ strong{
     border-radius: 10px;
 }
 label{
-    color:#0bd4c1;
+    color:#65abda;
+    /*color:#65abda;*/
     font-weight: 600;
 }
 
@@ -247,30 +289,36 @@ label{
     /* font-size: larger; */
     font-family: 'Material Icons';
     content: "\e3c9";
-    color: #ffc400;
+    color: #181b32d6;
     cursor: pointer;
     font-size: 25px;
     margin: 10px 5px 0 25px;
     transition: 0.3s;
+    
+-webkit-text-stroke: 1px #acacac;
 }
 
 .BotonBorrar::before{
     font-family: 'Material Icons';
     content: "\e15d";
-    color: #ef233c;
+    
     cursor: pointer;
     font-size: 25px;
     margin-right: 5px;
     transition: 0.3s;
+    -webkit-text-fill-color: #acacac;
+-webkit-text-stroke: 1px #181b32d6;
 }
 
 .BotonAñadir::before{
     font-family: 'Material Icons';
     content: "\e148";
-    color: #06d6a0;
+ 
     cursor: pointer;
     font-size: 25px;
     transition: 0.3s;
+    -webkit-text-fill-color: #acacac;
+-webkit-text-stroke: 1px #181b32d6;
 
 }
 
@@ -332,18 +380,7 @@ label{
     cursor: pointer;
 }
 
-@-webkit-keyframes BotonLista, BotonParrafo, .BotonImagen, .BotonSubtitulo {
-    0% {
-      letter-spacing: -0.5em;
-      opacity: 0;
-    }
-    40% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+
   @keyframes tracking-in-expand {
     0% {
       letter-spacing: -0.5em;
@@ -564,11 +601,18 @@ label{
         width: 100%;
     }
 }
+
 body{
-    background-image: url("../img/fondoAlt1.jpeg");
+    background-image:linear-gradient(rgba(17, 14, 31, 0.877),rgba(2, 1, 14, 0.952)),url("https://i.blogs.es/d8a22c/poeta_lunera_46878434_357901494940657_8644354556054754798_n/1366_2000.jpg");
+   
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    
+  
+}
+body::before{
+    background-color: rgba(3, 114, 218, 0.842);
 }
 
 #contenedor_carga{

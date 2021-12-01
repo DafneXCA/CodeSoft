@@ -12,40 +12,111 @@ examen.appendChild(BAceptar);
 examen.appendChild(Titulo);
 var num = 0;
 if (localStorage.getItem("Rol") == "Estudiante") {
-    BAceptar.style.display = "none";
-}
+    BAceptar.onclick=function(){
+        var calificacion=0;
+       // console.log("aghhhhhh");
+        var PregC = examen.getElementsByClassName("contestar");
+        if (PregC.length >0) {
+            for(var i=0;i<PregC.length;i++){
+                var contestado=PregC[i].childNodes[3];
 
-
-BAceptar.onclick = function () {
-    var PreguntasOb = examen.getElementsByClassName("Pregunta");
-    //console.log(PreguntasOb);
-    if (PreguntasOb.length > 0) {
-
-        if (control()) {
-            for (var i = 0; i < PreguntasOb.length; i++) {
-                ObtenerPregunta(PreguntasOb[i]);
-                /* var preg = ObtenerPregunta(PreguntasOb[i]);
-                 let Pregunta = preg;
-                 var res = ObtenerRespuestas(PreguntasOb[i]);
-                 let Respuestas = res;
-                 let Tipo = PreguntasOb[i].childNodes[3].value;
-                 var resC = ObtenerResC(PreguntasOb[i]);
-                 let RespuestaC = resC;
-                 const pregunta = { Pregunta, Respuestas, Tipo, RespuestaC }
-                 console.log(pregunta);*/
-                // GuardarPregunta(Subtema);
+                var resp=[];
+                var pos=0;
+                
+                for(var l=0;l<contestado.childNodes.length;l++){
+                    console.log(contestado.childNodes[l].childNodes[0].checked);
+                    if(contestado.childNodes[l].childNodes[0].checked){
+                        resp[pos]=contestado.childNodes[l].innerText;
+                        //console.log("--------------------");
+                       // console.log(resp[pos]);
+                        pos++;
+                    }
+                    //console.log(resp);
+                }
+               // console.log(contestado.childNodes[0].childNodes[0].checked);
+                for(var j=0;j<Preguntas.length;j++){
+                    console.log("AAAAA");
+                    console.log(PregC[i].id);
+                    console.log(Preguntas[j].ID);
+                    if(PregC[i].id==Preguntas[j].ID){
+                        console.log("AAAAA");
+                        var correcto=false;
+                        var respC=Preguntas[j].Descripcion.RespuestaC;
+                        respC=respC.split("<*>");
+                        if(respC.length<resp.length){
+                            PregC[i].style.borderColor="#ff0000";
+                        }else{
+                            for(var k=0;k<respC.length;k++){
+                                correcto=false;
+                                for(var m=0;m<resp.length;m++){
+                                    
+                                    if(resp[m]==respC[k]){
+                                        console.log(respC[k]);
+                                        console.log(resp[m]);
+                                        correcto=true;
+                                    }
+                                }
+                                if(!correcto){
+                                    PregC[i].style.borderColor="#ff0000";
+                                    break;
+                                }
+                            }
+                            if(correcto){
+                                //console.log("FF");
+                                PregC[i].style.borderColor="#008000";
+                                calificacion++;
+                                break;
+                            }
+                        }
+                        
+                        
+                    }
+                }
             }
-            setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
+            
+        }else{
 
-        } else {
-            alert("Revise la última pregunta antes de guardar");
+           //alert "No hay preguntas para calificar"
         }
-
-
-    } else {
-        alert("No hay nada que guardar");
+        //calificar
+        var nota=(100/PregC.length)*calificacion;
+        console.log(nota);
+    }
+}else{
+    BAceptar.onclick = function () {
+        var PreguntasOb = examen.getElementsByClassName("Pregunta");
+        //console.log(PreguntasOb);
+        if (PreguntasOb.length > 0) {
+    
+            if (control()) {
+                for (var i = 0; i < PreguntasOb.length; i++) {
+                    ObtenerPregunta(PreguntasOb[i]);
+                    /* var preg = ObtenerPregunta(PreguntasOb[i]);
+                     let Pregunta = preg;
+                     var res = ObtenerRespuestas(PreguntasOb[i]);
+                     let Respuestas = res;
+                     let Tipo = PreguntasOb[i].childNodes[3].value;
+                     var resC = ObtenerResC(PreguntasOb[i]);
+                     let RespuestaC = resC;
+                     const pregunta = { Pregunta, Respuestas, Tipo, RespuestaC }
+                     console.log(pregunta);*/
+                    // GuardarPregunta(Subtema);
+                }
+                setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
+    
+            } else {
+                alert("Revise la última pregunta antes de guardar");
+            }
+    
+    
+        } else {
+            alert("No hay nada que guardar");
+        }
     }
 }
+
+
+
 //-----------------------Obtener Pregunta-------------------------
 function ObtenerPregunta(pregunta) {
 
@@ -114,16 +185,23 @@ function ObtenerRespuestas(pregunta) {
     var cadRes = "";
     if (respuestas != "") {
         respuestas = respuestas.split("\n");
+        var res=[];
+        var pos=0;
         for (var m = 0; m < respuestas.length; m++) {
             var x = respuestas[m];
             //console.log(x);
             if (/\w/.test(x)) {
-                if (m != respuestas.length - 1) {
-                    cadRes = cadRes + x + "<*>";
-                } else {
-                    cadRes = cadRes + x;
-                }
+                res[pos]=x;
+                pos++;
+                
 
+            }
+        }
+        for(var j=0;j<res.length;j++){
+            if (j != res.length - 1) {
+                cadRes = cadRes + res[j] + "<*>";
+            } else {
+                cadRes = cadRes + res[j];
             }
         }
     }
@@ -136,21 +214,36 @@ function ObtenerResC(pregunta) {
     var cadRes = "";
     if (respuestas != "") {
         respuestas = respuestas.split("\n");
+        console.log(respuestas);
+        var res=[];
+        var pos=0;
         for (var m = 0; m < respuestas.length; m++) {
             var x = respuestas[m];
             //console.log(x);
             if (/\w/.test(x)) {
-                if (m != respuestas.length - 1) {
-                    cadRes = cadRes + x + "<*>";
-                } else {
-                    cadRes = cadRes + x;
-                }
-
+                res[pos]=x;
+                pos++;
             }
         }
+        console.log("#############");
+                console.log(res);
+            for(var n=0;n<res.length;n++){
+                if (n != res.length - 1) {
+                    cadRes = cadRes + res[n] + "<*>";
+                } else {
+                    cadRes = cadRes + res[n];
+                }
+            }
+            
+    }else{
+
     }
     return cadRes;
-}
+
+
+    }
+    
+
 /*--------------------Guardar Subtemas--------------------------- */
 function GuardarPregunta(pregunta) {
     db.collection("Examen1").add({
@@ -231,7 +324,7 @@ function CargarPreguntas() {
         console.log(Preguntas[i]);
         var contPreg = document.createElement("div");
         contPreg.id = Preguntas[i].ID;
-        contPreg.className = "pm";
+        contPreg.className = "contestar";
         var num = document.createElement("label");
         num.innerHTML = i + 1;
 
@@ -242,6 +335,7 @@ function CargarPreguntas() {
 
 
         var img = document.createElement("img");
+        img.className="ImgPreg";
         if (aux[1] != "") {
             img.src = aux[1];
         }
@@ -249,7 +343,7 @@ function CargarPreguntas() {
 
         var contres = document.createElement("div");
         contres.className = "Respuestas";
-        contres.className = "pm";
+        contres.className = "pmRes";
         var respuestas = Preguntas[i].Descripcion.Respuestas;
         respuestas = respuestas.split("<*>");
         if (Preguntas[i].Descripcion.Tipo == "Solución única") {
@@ -260,6 +354,7 @@ function CargarPreguntas() {
                 res.name = "rspt";
 
                 var lab = document.createElement("label");
+                lab.className="labRes";
                 lab.innerHTML = respuestas[j];
                 lab.style.display = "block";
                 lab.insertAdjacentElement("afterbegin", res);
@@ -269,9 +364,15 @@ function CargarPreguntas() {
             for (var j = 0; j < respuestas.length; j++) {
                 var res = document.createElement("input");
                 res.type = "checkbox";
-                res.innerText = respuestas[j];
-                console.log(res.innerHTML);
-                contres.appendChild(res);
+
+                var lab = document.createElement("label");
+                lab.className="labRes";
+                lab.innerHTML = respuestas[j];
+                
+                lab.style.display = "block";
+                lab.insertAdjacentElement("afterbegin", res);
+                
+                contres.appendChild(lab);
             }
         }
 
@@ -279,8 +380,11 @@ function CargarPreguntas() {
         contPreg.appendChild(preg);
         contPreg.appendChild(img);
         contPreg.appendChild(contres);
-        BEliminar(contPreg);
-        BEditar(contPreg);
+        if (localStorage.getItem("Rol") != "Estudiante") {
+            BEliminar(contPreg);
+            BEditar(contPreg);
+        }
+       
 
         examen.insertBefore(contPreg, examen.lastChild);
 
@@ -349,6 +453,7 @@ function BEditar(contPregunta) {
         op1.innerHTML = "Solución única";
         var op2 = document.createElement("option");;
         op2.innerHTML = "Selección múltiple";
+        console.log(copy.Tipo);
         if(copy.Tipo=="Solución única"){
             mod.appendChild(op1);
             mod.appendChild(op2);
@@ -389,27 +494,21 @@ function btnAE(contEd) {
     var aceptar=document.createElement("icon");
     aceptar.className="BotonAceptar";
     contEd.appendChild(aceptar);
+    
     aceptar.onclick=function(){
-        var newDiv=document.createElement("div");
+       
         
-        console.log(contEd.childNodes.length);
-        for(var i=0;i<contEd.childNodes.length;i++){
-            if(i!=3){
-                var copy=contEd.childNodes[i].cloneNode();
-                newDiv.appendChild(copy);
-            }
+        if(controlEdicion2(contEd)){
+           ObtenerPregunta2(contEd,contEd.parentNode.id);
+           //console.log(contEd.parentNode.id);
            
-        }
-        
-        if(controlEdicion2(newDiv)){
-           // ObtenerPregunta2(newDiv,contEd.parentNode.id);
-           console.log(contEd.parentNode.id);
+           
         }
         
     }
 }
 //------------------------------------------------------
-function ObtenerPregunta2(pregunta) {
+function ObtenerPregunta2(pregunta,id) {
 
     var texto = pregunta.firstChild.value;
     var parrafoaux = "";
@@ -433,8 +532,10 @@ function ObtenerPregunta2(pregunta) {
     var file = pregunta.childNodes[1].files[0];
 
     if (!file) {
-        parrafoaux = parrafoaux + "<*>"+pregunta.childNodes[2].scr;
-        GuardarPreguntan(pregunta, parrafoaux);
+        console.log("-.................");
+        console.log(pregunta.childNodes[2].src);
+        parrafoaux = parrafoaux + "<*>"+pregunta.childNodes[2].src;
+        GuardarPregunta2(pregunta, parrafoaux,id);
     } else {
         var storageRef = storage.ref('/ExamenNiv1/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
@@ -446,30 +547,54 @@ function ObtenerPregunta2(pregunta) {
 
             uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
                 urlImg = url;
-                console.log(url);
+              //  console.log(url);
                 parrafoaux = parrafoaux + "<*>" + urlImg;
-                GuardarPregunta2(pregunta, parrafoaux);
+                GuardarPregunta2(pregunta, parrafoaux,id);
 
-                console.log(parrafoaux);
+               // console.log(parrafoaux);
 
             });
 
         });
     }
 }
+//--------------------------------------------------------------------
+function clonar(contEd){
+var newDiv=document.createElement("div");
+        
+      //  console.log(contEd.childNodes.length);
+        for(var i=0;i<contEd.childNodes.length;i++){
+            if(i!=3){
+                var copy=contEd.childNodes[i].cloneNode(true);
+               // console.log("+----------------------");
+               // console.log(contEd.childNodes[i].cloneNode(true));
+                newDiv.appendChild(copy);
+            }
+           
+        }
+        return newDiv;
+}
 //---------------------------------------------------------------------------------
-function GuardarPregunta2(preguntan, pregCom) {
-    let Pregunta = pregCom;
-    var res = ObtenerRespuestas(preguntan);
-    let Respuestas = res;
-    let Tipo = preguntan.childNodes[3].value;
-    var resC = ObtenerResC(preguntan);
-    let RespuestaC = resC;
-    const pregunta = { Pregunta, Respuestas, Tipo, RespuestaC }
+function GuardarPregunta2(preguntan, pregCom, id) {
+    var clon=clonar(preguntan);
     
-    db.collection("Examen1").doc(preguntan.id).update({
-        subtema: { Contenido: cadof, Tema: contenedor.parentNode.parentNode.parentNode.id, ID: Number(contenedor.parentNode.childNodes[1].innerHTML), Tipo: contenedor.id }
+    var res = ObtenerRespuestas(clon);
+    
+    //sel.options[sel.selectedIndex].text
+   // console.log("..................................................");
+   
+    
+    
+    var resC = ObtenerResC(clon);
+   
+    
+    
+    
+    
+    db.collection("Examen1").doc(id).update({
+        pregunta: { Pregunta: pregCom, Respuestas: res, Tipo: preguntan.childNodes[4].value, RespuestaC : resC }
     })
+    setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
 }
 //----------------------Cancelar Edicion----------------
 function btnCE(contEd, copysrc) {
@@ -488,10 +613,11 @@ function btnCE(contEd, copysrc) {
                 (contEd.parentNode).childNodes[m].removeAttribute("src");
             }
         } else {
-            if(m == 1){
-                (contEd.parentNode).childNodes[m].style.display  = "block";
-            }else{
+            if(m > contEd.parentNode.childNodes.length-4){
+               
                 (contEd.parentNode).childNodes[m].style.display  = "inline";
+            }else{
+                (contEd.parentNode).childNodes[m].style.display  = "block";
             }
             
         }
@@ -501,6 +627,13 @@ function btnCE(contEd, copysrc) {
 }
 //---------------------Boton Eliminar------------------
 function BEliminar(contPregunta) {
+    var eliminar=document.createElement("icon");
+    eliminar.className="BotonBorrar";
+    contPregunta.appendChild(eliminar);
+    eliminar.onclick=function(){
+        //confirm
+        db.collection("Examen1").doc(contPregunta.id).delete();
+    }
 
 }
 //------------------mostrar imagen--------------------
@@ -791,6 +924,9 @@ function btnHabilitar(contExamen, conte) {
 }
 
 function controlEdicion2(conte) {
+    console.log("+++++++++++");
+    console.log(conte);
+    console.log("++++++++++++++");
     
     var confirm = true;
 
@@ -828,7 +964,7 @@ function controlEdicion2(conte) {
         }
     }
     //----------------verificar respuestas----------------------------
-    var respt = preguntConfirm.childNodes[4].value;
+    var respt = preguntConfirm.childNodes[5].value;
 
     respt = respt.split("\n");
     var contRes = 0;
@@ -865,7 +1001,7 @@ function controlEdicion2(conte) {
         alert("Debe tener un máximo de 12 respuestas");
     }
     //----------------------verificar respuesta correcta------------------
-    var resC = preguntConfirm.childNodes[5].value;
+    var resC = preguntConfirm.childNodes[6].value;
     resC = resC.split("\n");
     var vacio2 = "";
     var contRC = 0;
@@ -890,7 +1026,7 @@ function controlEdicion2(conte) {
             }
         }
     }
-    if (preguntConfirm.childNodes[3].value == "Solución única") {
+    if (preguntConfirm.childNodes[4].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
             alert("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");

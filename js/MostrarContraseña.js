@@ -22,12 +22,3 @@ iconEye.addEventListener("click", function(){
 
 });
 
-const iconEye1 = document.querySelector(".IconEye1");
-iconEye1.addEventListener("click", function(){
-    if(this.nextElementSibling.type === "password"){
-       this.nextElementSibling.type = "text";
-    }else{
-        this.nextElementSibling.type = "password";
-    }
-
-});
