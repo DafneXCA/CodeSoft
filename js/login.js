@@ -30,13 +30,25 @@ const firebaseConfig = {
             alert("Llene todos los campos");
         }else{
             if(Existe(correo.value,contraseña.value)==1){
+                var perfil=Usuario(correo.value,contraseña.value);
                 localStorage.setItem("Sesion","Activo");
-                localStorage.setItem("Nombre",NUser(correo.value,contraseña.value));
-                localStorage.setItem("Rol",RUser(correo.value,contraseña.value))
+                localStorage.setItem("Nombre",perfil.Descripcion.Nombre);
+                localStorage.setItem("Rol",perfil.Descripcion.Rol);
+                localStorage.setItem("Contraseña",contraseña.value);
+                localStorage.setItem("Correo", correo.value);
+                localStorage.setItem("Id",perfil.ID);
                 if(localStorage.getItem("Rol")=="Administrador"){
                     location.href="../public/IndexAdmonistrador.html";
                 }else{
-                    location.href="../index.html";
+                    if(localStorage.getItem("Rol")=="Estudiante"){
+                        localStorage.setItem("Nivel1",perfil.Descripcion.Nivel1);
+                        localStorage.setItem("Nivel2",perfil.Descripcion.Nivel2);
+                        localStorage.setItem("Nivel3",perfil.Descripcion.Nivel3);
+                        localStorage.setItem("Nota1",perfil.Descripcion.Nota1);
+                        localStorage.setItem("Nota2",perfil.Descripcion.Nota2);
+                        localStorage.setItem("Nota3",perfil.Descripcion.Nota3);
+                        location.href="../../index.html";
+                    }
                 }
                 
             }else{
@@ -46,6 +58,7 @@ const firebaseConfig = {
 
     }
     function Existe(correo,contraseña){
+       
         var encontrado=0;
         for(var i=0;i<Usuarios.length;i++){
            if(correo==Usuarios[i].Descripcion.Correo && contraseña==Usuarios[i].Descripcion.Contraseña ){
@@ -54,21 +67,17 @@ const firebaseConfig = {
         }
         return encontrado;
     }
-    function NUser(correo,contraseña){
-        var encontrado=0;
+
+    function Usuario(correo,contraseña){
+        
+        var encontrado;
         for(var i=0;i<Usuarios.length;i++){
            if(correo==Usuarios[i].Descripcion.Correo && contraseña==Usuarios[i].Descripcion.Contraseña ){
-               encontrado=Usuarios[i].Descripcion.Nombre;
+               encontrado=Usuarios[i];
            }
         }
         return encontrado;
     }
-    function RUser(correo,contraseña){
-        var encontrado=0;
-        for(var i=0;i<Usuarios.length;i++){
-           if(correo==Usuarios[i].Descripcion.Correo && contraseña==Usuarios[i].Descripcion.Contraseña ){
-               encontrado=Usuarios[i].Descripcion.Rol;
-           }
-        }
-        return encontrado;
-    }
+    
+   
+    
