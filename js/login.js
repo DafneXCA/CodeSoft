@@ -47,7 +47,7 @@ const firebaseConfig = {
                         localStorage.setItem("Nota1",perfil.Descripcion.Nota1);
                         localStorage.setItem("Nota2",perfil.Descripcion.Nota2);
                         localStorage.setItem("Nota3",perfil.Descripcion.Nota3);
-                        location.href="../../index.html";
+                        location.href="../index.html";
                     }
                 }
                 

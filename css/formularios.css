@@ -6,7 +6,7 @@
 
 body{
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(to bottom, #3a287a, #00429b, #006dba, #0095ce, #2dbcdc);
+    background: #0D1117;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -22,6 +22,7 @@ header{
     padding: 15px 0;
     display: flex;
     flex-flow: row nowrap;
+    box-shadow: 0px 10px 10px -6px black;
 }
 
 .contenedor{
@@ -120,10 +121,12 @@ header{
 }
 
 .CajaFormulario{
-    background-color: hsl(0, 100%, 50%, .1);
+    background-color: #161B22;
     max-width: 500px;
     margin-top: 50px;
     border-radius: 10px;
+    box-shadow: 10px 10px 10px -6px black;
+    
 
 }
 
@@ -217,12 +220,6 @@ header{
     width: 50px;
     margin-right: 20px;
 }
-.titulo{
-    text-align: center;
-    color: #eff3f5;
-}
-.tabla1{
-    margin-bottom: auto;
-    margin: 30px;
-    font-size: 16px;
+a:hover{
+    text-decoration: none;
 }

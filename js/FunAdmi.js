@@ -36,4 +36,7 @@ window.onload=function(){
         
     }
 }
+NombreU.onclick=function(){
+    location.href="../public/PerfilAdministrador.html";
+}
 

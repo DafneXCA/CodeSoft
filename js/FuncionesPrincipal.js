@@ -86,7 +86,7 @@ if(localStorage.getItem("Nombre")!=null){
     nom=nom.split(" ");
     NombreU.innerHTML=nom[0];
     NombreU.onclick=function(){
-        location.href="../public/PerfilEstudiante.html";
+        location.href="public/PerfilEstudiante.html";
     }
 }
 //Responsive footer
