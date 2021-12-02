@@ -223,3 +223,94 @@ header{
 a:hover{
     text-decoration: none;
 }
+.titulo{
+    text-align: center;
+    color: #eff3f5;
+}
+.tabla1{
+    margin-bottom: auto;
+    margin: 30px;
+    font-size: 16px;
+}
+@media (max-width: 1200px) {
+    .tabla1 {
+        width: 70%;
+        height: 500px;
+    }
+    
+}
+@media (max-width: 1024px) {
+    .tabla1{
+        width: 70%;
+        height: 500px;
+    }
+
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (max-width: 992px) { 
+    .tabla1{
+        height: 40%;
+        height: 200px;
+    }
+}
+/* Medium devices (tablets, 768px and up)*/
+@media screen and  (max-width: 768px) { 
+    .tabla1 tr{
+     border: 0px; 
+    }
+    .tabla1 th, .tabla1 td{
+      font-size: 12px;
+       }
+
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) { 
+    .tabla1{
+        width: 200px;
+        height: 300px;
+    }
+       .tabla1 tr{
+        border: 0px; 
+        font-size: 5px;
+        margin: 0;
+        padding: 0;
+       }
+       .tabla1 th,.tabla1 td{
+         font-size: 5px;
+          }
+}
+    
+
+@media  (max-width: 350px) { 
+    .tabla1{
+        width: 200px;
+        height: 300px;
+    }
+       .tabla1 tr{
+        border: 0px; 
+        font-size: 3.5px;
+        margin: 0;
+        padding: 0;
+       }
+       .tabla1 th,.tabla1 td{
+         font-size: 3.5px;
+          }
+}
+@media (max-width: 300px) { 
+    .tabla1{
+        width: 200px;
+        height: 300px;
+    }
+       .tabla1 tr{
+        border: 0px; 
+        font-size: 5px;
+        margin: 0;
+        padding: 0;
+       }
+       .tabla1 th,.tabla1 td{
+         font-size: 5px;
+          }
+
+}
