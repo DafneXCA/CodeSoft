@@ -32,10 +32,11 @@ db.collection("Subtemas3").get().then(function (BaseSubtemas) {
 /*-------------------------------Cargar Subtemas------------------------------*/
 function CargarSubtemas() {
     if (L_subtemas.length == 0) {
-        setTimeout(() => { }, 2000);
+       setTimeout(() => { }, 2000);
         //crearSubtema();
 
     } else {
+
         setTimeout(() => { }, 1);
         var divTemas = cont.getElementsByClassName("TemaC");
         for(var q=0;q<L_subtemas.length;q++){
@@ -65,33 +66,35 @@ function CargarSubtemas() {
 
 
                 for (var t = 0; t < divTemas.length; t++) {
+                    
                     if (divTemas[t].id == L_subtemas[i].Descripcion.Tema) {
                         ContTemas = divTemas[t];
-                        var divSubtitulo = document.createElement("div");
+                        
+                         var divSubtitulo = document.createElement("div");
 
-                ContTemas.appendChild(divSubtitulo);
+                        ContTemas.appendChild(divSubtitulo);
 
-                var divContSub = document.createElement("div");
-                divContSub.className = "Subtitulo";
-                divContSub.id = L_subtemas[i].ID;
-                var subtitulo = document.createElement("h3");
+                         var divContSub = document.createElement("div");
+                         divContSub.className = "Subtitulo";
+                        divContSub.id = L_subtemas[i].ID;
+                        var subtitulo = document.createElement("h3");
 
-                subtitulo.innerHTML = L_subtemas[i].Descripcion.Contenido;
-                divContSub.appendChild(subtitulo);
-                divSubtitulo.appendChild(divContSub);
-                //Recuperar ID
+                         subtitulo.innerHTML = L_subtemas[i].Descripcion.Contenido;
+                         divContSub.appendChild(subtitulo);
+                        divSubtitulo.appendChild(divContSub);
+                         //Recuperar ID
 
-                divContSub.appendChild(ID);
-                // cont.appendChild(divContSub);
-                if(localStorage.getItem("Rol")!="Estudiante"){
-                Editar(divContSub);
-                Borrar(divContSub);
-                Añadir(divContSub);
-                }
+                         divContSub.appendChild(ID);
+                         // cont.appendChild(divContSub);
+                         if(localStorage.getItem("Rol")!="Estudiante"){
+                            Editar(divContSub);
+                            Borrar(divContSub);
+                            Añadir(divContSub);
+                         }
+                       
                     }
                 }
 
-                
             }
             /*----------------------------LISTA-----------------------------*/
             if (L_subtemas[i].Descripcion.Tipo == "Lista") {
@@ -330,7 +333,7 @@ function AceptarEI(contenedor) {
         var file = contenedor.childNodes[0].files[0];
         if (!file) {
             
-            alert("No se seleccionó ninguna imagen");
+            vacio("No se seleccionó ninguna imagen");
         } else {
             console.log(file);
             var formato=(file.type).split("/");
@@ -340,7 +343,7 @@ function AceptarEI(contenedor) {
                 contenedor.parentNode.childNodes[2].style.display = "inline";
                 contenedor.parentNode.childNodes[3].style.display = "inline";
                 contenedor.parentNode.childNodes[4].style.display = "inline";
-                var storageRef = storage.ref('/Nivel2/' + file.name + Math.random());
+                var storageRef = storage.ref('/Nivel3/' + file.name + Math.random());
                 var uploadTask = storageRef.put(file);
                 var urlImg;
     
@@ -357,7 +360,7 @@ function AceptarEI(contenedor) {
     
                 });
              }else{
-                 alert("Formato de imagen no aceptado");
+                 vacio("Formato de imagen no aceptado");
              }
             
         }
@@ -507,13 +510,16 @@ function AceptarE(contenedor) {
                 db.collection("Subtemas3").doc(contenedor.parentNode.id).update({
                     subtema: { Contenido: cadof, Tema: contenedor.parentNode.parentNode.parentNode.id, ID: Number(contenedor.parentNode.childNodes[1].innerHTML), Tipo: contenedor.id }
                 })
+                }else{
+                    vacio("No se puede actualizar, solo contiene espacios en blanco");
+                   
                 }
             }
 
             setTimeout(() => { window.location.reload(); }, 2000);
            
         } else {
-            alert("No se puede actualizar, solo contiene espacios en blanco");
+            vacio("No se puede actualizar, solo contiene espacios en blanco");
         }
     }
 }
@@ -661,15 +667,18 @@ function aceptarI(contenedor) {
         var file = contenedor.childNodes[0].files[0];
         
         if (!file) {
-            alert("No se seleccionó ninguna imagen");
+            vacio("No se seleccionó ninguna imagen");
         } else {
-            var storageRef = storage.ref('/Nivel2/' + file.name + Math.random());
-            var uploadTask = storageRef.put(file);
-            var urlImg;
+            var formato=(file.type).split("/");
+            if(formato[1]=="jpg" ||formato[1]=="png" || formato[1]=="gif" || formato[1]=="jpeg"){
 
-            uploadTask.on('state_changed', function (snapshot) { }, function (error) {
+                var storageRef = storage.ref('/Nivel3/' + file.name + Math.random());
+                var uploadTask = storageRef.put(file);
+                var urlImg;
+
+                uploadTask.on('state_changed', function (snapshot) { }, function (error) {
                 console.log(error);
-            }, function () {
+                }, function () {
 
                 uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
                     urlImg = url;
@@ -677,7 +686,11 @@ function aceptarI(contenedor) {
                     cargarDatos(urlImg, contenedor);
                 });
 
-            });
+                });
+            }else{
+                vacio("Formato de imagen no aceptado");
+            }
+            
         }
     }
 
@@ -721,18 +734,29 @@ function Borrar(subtema) {
     borrar.className="BotonBorrar";
     subtema.appendChild(borrar);
     borrar.onclick = function () {
-        var confirmacion=confirm("¿Estas seguro de borrar este contenido?\nUna vez borrado no podrá recuperar el contenido");
-        if(confirmacion){
-            if (subtema.className == "Subtitulo") {
-                var contSubtema = subtema.parentNode.childNodes;
-                for (var i = 0; i < contSubtema.length; i++) {
-                    db.collection("Subtemas3").doc(contSubtema[i].id).delete();
+        Swal.fire({
+            title: '¿Seguro que quiere eliminar?',
+            text: "No podrá recuperar el contenido",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si,quiero eliminarlo',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                if (subtema.className == "Subtitulo") {
+                    var contSubtema = subtema.parentNode.childNodes;
+                    for (var i = 0; i < contSubtema.length; i++) {
+                        db.collection("Subtemas3").doc(contSubtema[i].id).delete();
+                    }
+                } else {
+                    db.collection("Subtemas3").doc(subtema.id).delete();
                 }
-            } else {
-                db.collection("Subtemas3").doc(subtema.id).delete();
+                setTimeout(() => { window.location.reload(); }, 2000);
             }
-            setTimeout(() => { window.location.reload(); }, 2000);
-        }
+          })
+       
         
     }
 }
@@ -772,7 +796,7 @@ function aceptar(subtema) {
 
                 setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
             } else {
-                alert("No puede dejar este espacion en blanco");
+                vacio("No puede dejar este espacion en blanco");
             }
             //console.log(subtema.parentNode.parentNode.parentNode);
         }
@@ -784,7 +808,9 @@ function aceptar(subtema) {
                 let Tipo = "Parrafo";
 
                 var texto = subtema.firstChild.value;
+                
                 if (texto != "") {
+                   
                     var separado = texto.split('\n');
                     var parrafoaux = "";
                     for (var i = 0; i < separado.length; i++) {
@@ -799,19 +825,23 @@ function aceptar(subtema) {
                         }
 
                     }
-                }
+                
                 if(parrafoaux!=""){
                     let Contenido = parrafoaux;
                     console.log(subtema.parentNode.parentNode);
                     let Tema = subtema.parentNode.parentNode.parentNode.id;
                     const Subtema = { ID, Tipo, Contenido, Tema }
+                   
     
-                    GuardarSubtema(Subtema);
+                   GuardarSubtema(Subtema);
                     subtema.parentNode.removeChild(subtema);
-                    setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
+                   setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
                 }else{
-                    alert("No puede dejar este espacion en blanco");
+                    vacio("No puede dejar este espacion en blanco");
                 }
+            }else{
+                vacio("No puede dejar este espacion en blanco");
+            }
                
             }
             if (subtema.id == "Lista") {
@@ -842,7 +872,7 @@ function aceptar(subtema) {
                             listaAux = listaAux + control[i];
                         }
                     }
-                }
+                
                 if(listaAux!=""){
                     let Contenido = listaAux;
                 let Tema = subtema.parentNode.parentNode.parentNode.id;
@@ -851,12 +881,15 @@ function aceptar(subtema) {
                 // console.log("++++++++++++++++");
                 const Subtema = { ID, Tipo, Contenido, Tema }
 
-                GuardarSubtema(Subtema);
+               GuardarSubtema(Subtema);
                 subtema.parentNode.removeChild(subtema);
                 setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
                 }else{
-                    alert("No puede dejar este espacion en blanco");
+                    vacio("No puede dejar este espacion en blanco");
                 }
+            }else{
+                vacio("No puede dejar este espacion en blanco");
+            }
                 
             }
 
@@ -921,6 +954,14 @@ function aceptar(subtema) {
         divST.appendChild(auxiliar);
         aceptar(auxiliar);
         cancelar(auxiliar);
+    }
+    function vacio(texto){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: texto,
+            
+          });
     }
 /*
 function crearSubtema() {
