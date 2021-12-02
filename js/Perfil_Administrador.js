@@ -30,6 +30,7 @@ contraseñaEdit.style.display="none";
 //----------------------------------------------------
 var Editar= document.getElementById("Editar");
 Editar.onclick=function(){
+    mensaje="";
     if(Editar.innerHTML=="Editar datos"){
         nombreEdit.value=nombre.innerHTML;
         contraseñaEdit.value=contraseña.innerHTML;
@@ -43,36 +44,36 @@ Editar.onclick=function(){
         var aceptado=0;
         if(nombreEdit.value=="" || contraseñaEdit.value == ""){
             aceptado=1
-            alert("Llene todos los espacios vacíos");
+            mensaje+="Llene todos los espacios vacíos<br>";
         }
         if(nombreEdit.value.length<6){
             if(nombreEdit.value!=""){
-                alert("Nombre muy corto");
+                mensaje+="Nombre muy corto<br>";
             }
             aceptado=1;
         }
         if(nombreEdit.value.length>40){
             if(nombreEdit.value!=""){
-                alert("Nombre muy largo");
+                mensaje+="Nombre muy largo<br>";
             }
             aceptado=1;
         }
         if(/^[A-Za-z\s]+$/.test(nombreEdit.value)){   
         }else{
             if(nombreEdit.value!=""){
-            alert("Nombre no valido");
+                mensaje+="Nombre no valido<br>";
             }
             aceptado=1;
         }
         if(contraseñaEdit.value.length<8){
             if(contraseñaEdit.value!=""){
-                alert("Constraseña muy corta");
+                mensaje+="Constraseña muy corta<br>";
             }
             aceptado=1;
         }
         if(contraseñaEdit.value.length>20){
             if(contraseñaEdit.value!=""){
-                alert("Constraseña muy larga");
+                mensaje+="Constraseña muy larga<br>";
             }
             aceptado=1;
         }
@@ -85,6 +86,8 @@ Editar.onclick=function(){
             localStorage.setItem("Contraseña",contraseñaEdit.value);
             setTimeout(()=>{window.location.reload();},2000); 
             
+        }else{
+            html(mensaje)
         }
     }
 
@@ -102,13 +105,30 @@ Cancelar.style.display="none";
 
 var Eliminar=document.getElementById("Eliminar");
 Eliminar.onclick=function(){
-    var confirmacion=confirm("¿Estas seguro de borrar su Cuenta?\nUna vez borrada la cuenta no podrá recuperarla");
-        if(confirmacion){
+    Swal.fire({
+        title: '¿Seguro que quiere eliminar?',
+        text: "No podrá recuperar el contenido",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si,quiero eliminarlo',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
             db.collection("Usuarios").doc(localStorage.getItem("Id")).delete(); 
         
-        setTimeout(()=>{
-            localStorage.clear();
-            location.href="../../index.html";
-        },2000); 
+            setTimeout(()=>{
+                localStorage.clear();
+                location.href="../index.html";
+            },2000);  
         }
+      })
 }
+function html(men){
+    Swal.fire({
+      title: 'Error',
+      icon: 'error',
+      html: men
+    })
+  }
