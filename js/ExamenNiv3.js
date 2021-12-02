@@ -4,7 +4,7 @@ var Preguntas = [];
 var cont = document.getElementById("cont");
 //var storageRef = storage.ref();
 var BAceptar = document.createElement("button");
-
+BAceptar.innerHTML = "Aceptar";
 var Titulo = document.createElement("h2");
 Titulo.innerHTML = "EXAMEN";
 
@@ -12,7 +12,6 @@ examen.appendChild(BAceptar);
 examen.appendChild(Titulo);
 var num = 0;
 if (localStorage.getItem("Rol") == "Estudiante") {
-    BAceptar.innerHTML = "Calificar";
     BAceptar.onclick=function(){
         var calificacion=0;
        // console.log("aghhhhhh");
@@ -74,10 +73,10 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                     }
                 }
             }
-            //calificar
+             //calificar
             var nota=(100/PregC.length)*calificacion;
-            localStorage.setItem("Nota1", nota);
-            localStorage.setItem("Nivel1","SI");
+            localStorage.setItem("Nota3", nota);
+            localStorage.setItem("Nivel3","SI");
             //guardar nota en perfil
             db.collection("Usuarios").doc(localStorage.getItem("Id")).update({
             Usuario: 
@@ -85,24 +84,23 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             Correo: localStorage.getItem("Correo"),
             Contraseña: localStorage.getItem("Contraseña"),
             Rol: "Estudiante",
-            Nivel1: localStorage.getItem("Nivel2"),
-            Nivel2: "SI",
+            Nivel1: "SI",
+            Nivel2: localStorage.getItem("Nivel2"),
             Nivel3: localStorage.getItem("Nivel3"),
-            Nota1: nota,
+            Nota1: localStorage.getItem("Nota3"),
             Nota2: localStorage.getItem("Nota2"),
-            Nota3: localStorage.getItem("Nota3")
+            Nota3: nota
             
             }
         })
         setTimeout(()=>{window.location.reload();},2000); 
         }else{
 
-           vacio1("No hay preguntas para calificar") ;
+           //alert "No hay preguntas para calificar"
         }
-        
+       
     }
 }else{
-    BAceptar.innerHTML = "Aceptar";
     BAceptar.onclick = function () {
         var PreguntasOb = examen.getElementsByClassName("Pregunta");
         //console.log(PreguntasOb);
@@ -125,12 +123,12 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                 setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
     
             } else {
-                vacio1("Revise la última pregunta antes de guardar");
+                alert("Revise la última pregunta antes de guardar");
             }
     
     
         } else {
-            vacio1("No hay nada que guardar");
+            alert("No hay nada que guardar");
         }
     }
 }
@@ -165,7 +163,7 @@ function ObtenerPregunta(pregunta) {
         parrafoaux = parrafoaux + "<*>";
         GuardarPreguntan(pregunta, parrafoaux);
     } else {
-        var storageRef = storage.ref('/ExamenNiv1/' + file.name + Math.random());
+        var storageRef = storage.ref('/ExamenNiv3/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
         var urlImg;
 
@@ -266,12 +264,12 @@ function ObtenerResC(pregunta) {
 
 /*--------------------Guardar Subtemas--------------------------- */
 function GuardarPregunta(pregunta) {
-    db.collection("Examen1").add({
+    db.collection("Examen3").add({
         pregunta
     });
 }
 /*---------------Leer------------------------------*/
-db.collection("Examen1").get().then(function (BaseExamen1) {
+db.collection("Examen3").get().then(function (BaseExamen1) {
     BaseExamen1.forEach(function (doc) {
         Preguntas.push({
             Descripcion: doc.data().pregunta,
@@ -279,12 +277,12 @@ db.collection("Examen1").get().then(function (BaseExamen1) {
         });
     });
     console.log(Preguntas);
-    if(localStorage.getItem("Nivel1")=="NO" || localStorage.getItem("Rol") != "Estudiante" ){
+    if(localStorage.getItem("Nivel3")=="NO"){
         CargarPreguntas();
     cont.appendChild(examen);
     }else{
         var mensaje= document.createElement("div");
-        mensaje.innerHTML="Usted ya rindio el examen del Nivel 1";
+        mensaje.innerHTML="Usted ya rindio el examen del Nivel 3";
         mensaje.id="mensaje";
         cont.appendChild(mensaje);
     }
@@ -342,7 +340,7 @@ function CargarPreguntas() {
                 examen.insertBefore(divPreg, btnAñadir);
 
             } else {
-                vacio1("No puede agregar otra pregunta, porque tiene errores en la última pregunta añadida");
+                alert("No puede agregar otra pregunta, porque tiene errores en la última pregunta añadida");
             }
 
         }
@@ -448,7 +446,7 @@ function BEditar(contPregunta) {
             if (nimg.src != "") {
                 nimg.removeAttribute("src");
             } else {
-                vacio1("No hay imagenes que eliminar");
+                alert("No hay imagenes que eliminar");
             }
         }
         img.addEventListener('change', mostrar, 'false');
@@ -565,7 +563,7 @@ function ObtenerPregunta2(pregunta,id) {
         parrafoaux = parrafoaux + "<*>"+pregunta.childNodes[2].src;
         GuardarPregunta2(pregunta, parrafoaux,id);
     } else {
-        var storageRef = storage.ref('/ExamenNiv1/' + file.name + Math.random());
+        var storageRef = storage.ref('/ExamenNiv3/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
         var urlImg;
 
@@ -619,7 +617,7 @@ function GuardarPregunta2(preguntan, pregCom, id) {
     
     
     
-    db.collection("Examen1").doc(id).update({
+    db.collection("Examen3").doc(id).update({
         pregunta: { Pregunta: pregCom, Respuestas: res, Tipo: preguntan.childNodes[4].value, RespuestaC : resC }
     })
     setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
@@ -660,7 +658,7 @@ function BEliminar(contPregunta) {
     contPregunta.appendChild(eliminar);
     eliminar.onclick=function(){
         //confirm
-        db.collection("Examen1").doc(contPregunta.id).delete();
+        db.collection("Examen3").doc(contPregunta.id).delete();
     }
 
 }
@@ -730,7 +728,7 @@ function controlF() {
         var file = preguntConfirm.childNodes[1].files[0];
         if (!file) {
             if (booltxt == false) {
-                vacio1("Debe añadir una imagen o descripción para la pregunta");
+                alert("Debe añadir una imagen o descripción para la pregunta");
                 confirm = false;
             }
         } else {
@@ -738,7 +736,7 @@ function controlF() {
             if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
             } else {
-                vacio1("Formato de imagen no aceptado");
+                alert("Formato de imagen no aceptado");
                 confirm = false;
             }
         }
@@ -753,7 +751,7 @@ function controlF() {
                 //  console.log(respt[j]);
                 if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                     if (respt[a] == respt[j]) {
-                        vacio1("No puede haber 2 respuestas repetidas");
+                        alert("No puede haber 2 respuestas repetidas");
                         confirm = false;
                     }
                 }
@@ -770,14 +768,14 @@ function controlF() {
             }
         }
         if (vacio == "") {
-            vacio1("No puede dejar el espacio de respuestas vacío");
+            alert("No puede dejar el espacio de respuestas vacío");
         }
         if (contRes < 2 && contRes > 0) {
-            vacio1("Debe tener un mínimo de 2 respuestas");
+            alert("Debe tener un mínimo de 2 respuestas");
             confirm = false;
         }
         if (contRes > 12) {
-            vacio1("Debe tener un máximo de 12 respuestas");
+            alert("Debe tener un máximo de 12 respuestas");
         }
         //----------------------verificar respuesta correcta------------------
         var resC = preguntConfirm.childNodes[5].value;
@@ -800,7 +798,7 @@ function controlF() {
                     }
                 }
                 if (!conf) {
-                    vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                    alert("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
                     confirm = false;
                 }
             }
@@ -808,12 +806,12 @@ function controlF() {
         if (preguntConfirm.childNodes[3].value == "Solución única") {
             if (contRC > 1) {
                 confirm = false;
-                vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+                alert("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
             }
         } else {
             if (contRC <= 1) {
                 confirm = false;
-                vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+                alert("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
             } else {
                 //--------------verificar repetidos-----------------------------------
                 for (var f = 0; f < resC.length - 1; f++) {
@@ -822,7 +820,7 @@ function controlF() {
                         //  console.log(respt[j]);
                         if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                             if (resC[f] == resC[g]) {
-                                vacio1("No puede haber 2 respuestas correctas repetidas");
+                                alert("No puede haber 2 respuestas correctas repetidas");
                                 confirm = false;
                             }
                         }
@@ -832,7 +830,7 @@ function controlF() {
             }
         }
         if (vacio2 == "") {
-            vacio1("No puede dejar el espacio de respuesta correcta vacío");
+            alert("No puede dejar el espacio de respuesta correcta vacío");
         }
         if (confirm) {
             preguntConfirm.childNodes[0].disabled = true;
@@ -979,7 +977,7 @@ function controlEdicion2(conte) {
     if (!file) {
         
         if (booltxt == false && preguntConfirm.childNodes[1].scr=="") {
-            vacio1("Debe añadir una imagen o descripción para la pregunta");
+            alert("Debe añadir una imagen o descripción para la pregunta");
             confirm = false;
         }
     } else {
@@ -987,7 +985,7 @@ function controlEdicion2(conte) {
         if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
         } else {
-            vacio1("Formato de imagen no aceptado");
+            alert("Formato de imagen no aceptado");
             confirm = false;
         }
     }
@@ -1002,7 +1000,7 @@ function controlEdicion2(conte) {
             //  console.log(respt[j]);
             if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                 if (respt[a] == respt[j]) {
-                    vacio1("No puede haber 2 respuestas repetidas");
+                    alert("No puede haber 2 respuestas repetidas");
                     confirm = false;
                 }
             }
@@ -1019,14 +1017,14 @@ function controlEdicion2(conte) {
         }
     }
     if (vacio == "") {
-        vacio1("No puede dejar el espacio de respuestas vacío");
+        alert("No puede dejar el espacio de respuestas vacío");
     }
     if (contRes < 2 && contRes > 0) {
-        vacio1("Debe tener un mínimo de 2 respuestas");
+        alert("Debe tener un mínimo de 2 respuestas");
         confirm = false;
     }
     if (contRes > 12) {
-        vacio1("Debe tener un máximo de 12 respuestas");
+        alert("Debe tener un máximo de 12 respuestas");
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[6].value;
@@ -1049,7 +1047,7 @@ function controlEdicion2(conte) {
                 }
             }
             if (!conf) {
-                vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                alert("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
                 confirm = false;
             }
         }
@@ -1057,12 +1055,12 @@ function controlEdicion2(conte) {
     if (preguntConfirm.childNodes[4].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+            alert("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+            alert("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1071,7 +1069,7 @@ function controlEdicion2(conte) {
                     //  console.log(respt[j]);
                     if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                         if (resC[f] == resC[g]) {
-                            vacio1("No puede haber 2 respuestas correctas repetidas");
+                            alert("No puede haber 2 respuestas correctas repetidas");
                             confirm = false;
                         }
                     }
@@ -1081,7 +1079,7 @@ function controlEdicion2(conte) {
         }
     }
     if (vacio2 == "") {
-        vacio1("No puede dejar el espacio de respuesta correcta vacío");
+        alert("No puede dejar el espacio de respuesta correcta vacío");
     }
 
 
@@ -1114,7 +1112,7 @@ function controlEdicion(conte) {
     if (!file) {
         
         if (booltxt == false) {
-            vacio1("Debe añadir una imagen o descripción para la pregunta");
+            alert("Debe añadir una imagen o descripción para la pregunta");
             confirm = false;
         }
     } else {
@@ -1122,7 +1120,7 @@ function controlEdicion(conte) {
         if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
         } else {
-            vacio1("Formato de imagen no aceptado");
+            alert("Formato de imagen no aceptado");
             confirm = false;
         }
     }
@@ -1137,7 +1135,7 @@ function controlEdicion(conte) {
             //  console.log(respt[j]);
             if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                 if (respt[a] == respt[j]) {
-                    vacio1("No puede haber 2 respuestas repetidas");
+                    alert("No puede haber 2 respuestas repetidas");
                     confirm = false;
                 }
             }
@@ -1154,14 +1152,14 @@ function controlEdicion(conte) {
         }
     }
     if (vacio == "") {
-        vacio1("No puede dejar el espacio de respuestas vacío");
+        alert("No puede dejar el espacio de respuestas vacío");
     }
     if (contRes < 2 && contRes > 0) {
-        vacio1("Debe tener un mínimo de 2 respuestas");
+        alert("Debe tener un mínimo de 2 respuestas");
         confirm = false;
     }
     if (contRes > 12) {
-        vacio1("Debe tener un máximo de 12 respuestas");
+        alert("Debe tener un máximo de 12 respuestas");
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[5].value;
@@ -1184,7 +1182,7 @@ function controlEdicion(conte) {
                 }
             }
             if (!conf) {
-                vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                alert("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
                 confirm = false;
             }
         }
@@ -1192,12 +1190,12 @@ function controlEdicion(conte) {
     if (preguntConfirm.childNodes[3].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+            alert("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+            alert("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1206,7 +1204,7 @@ function controlEdicion(conte) {
                     //  console.log(respt[j]);
                     if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                         if (resC[f] == resC[g]) {
-                            vacio1("No puede haber 2 respuestas correctas repetidas");
+                            alert("No puede haber 2 respuestas correctas repetidas");
                             confirm = false;
                         }
                     }
@@ -1216,7 +1214,7 @@ function controlEdicion(conte) {
         }
     }
     if (vacio2 == "") {
-        vacio1("No puede dejar el espacio de respuesta correcta vacío");
+        alert("No puede dejar el espacio de respuesta correcta vacío");
     }
 
 
@@ -1249,12 +1247,4 @@ function desHabilitarResto(contExamen, conte) {
         }
 
     }
-}
-function vacio1(texto){
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: texto,
-        
-      });
 }

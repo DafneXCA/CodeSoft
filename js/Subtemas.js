@@ -86,9 +86,11 @@ function CargarSubtemas() {
 
                          divContSub.appendChild(ID);
                          // cont.appendChild(divContSub);
+                         if(localStorage.getItem("Rol")!="Estudiante"){
                          Editar(divContSub);
                           Borrar(divContSub);
                         Añadir(divContSub);
+                         }
                     }
                 }
 
@@ -147,9 +149,11 @@ function CargarSubtemas() {
 
                 // var ultimoSubtema = cont.lastChild;
                 // ultimoSubtema.appendChild(lista);
+                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(lista);
                 Borrar(lista);
                 Añadir(lista);
+                }
 
             }
             /*----------------------------PARRAFO---------------------------*/
@@ -203,9 +207,11 @@ function CargarSubtemas() {
                 }
 
                 parrafo.appendChild(ID);
+                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(parrafo);
                 Borrar(parrafo);
                 Añadir(parrafo);
+                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -259,9 +265,11 @@ function CargarSubtemas() {
                 }
 
                 divImagen.appendChild(ID);
+                if(localStorage.getItem("Rol")!="Estudiante"){
                 EditarI(divImagen);
                 Borrar(divImagen);
                 Añadir(divImagen);
+                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -953,7 +961,7 @@ function aceptar(subtema) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: texto,
+            text: texto
             
           });
     }
