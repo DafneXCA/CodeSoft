@@ -75,7 +75,16 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                 }
             }
             //calificar
+            
             var nota=(100/PregC.length)*calificacion;
+            if(nota>50){
+                calificar(nota+"/"+100,"success");
+                setTimeout(()=>{},500); 
+            }else{
+                calificar(nota+"/"+100,"error");
+                setTimeout(()=>{},500); 
+            }
+            
             localStorage.setItem("Nota1", nota);
             localStorage.setItem("Nivel1","SI");
             //guardar nota en perfil
@@ -85,15 +94,17 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             Correo: localStorage.getItem("Correo"),
             Contraseña: localStorage.getItem("Contraseña"),
             Rol: "Estudiante",
-            Nivel1: localStorage.getItem("Nivel2"),
-            Nivel2: "SI",
+            Nivel1: "SI",
+            Nivel2: localStorage.getItem("Nivel2"),
             Nivel3: localStorage.getItem("Nivel3"),
             Nota1: nota,
             Nota2: localStorage.getItem("Nota2"),
             Nota3: localStorage.getItem("Nota3")
             
             }
+
         })
+        
         setTimeout(()=>{window.location.reload();},2000); 
         }else{
 
@@ -342,7 +353,7 @@ function CargarPreguntas() {
                 examen.insertBefore(divPreg, btnAñadir);
 
             } else {
-                vacio1("No puede agregar otra pregunta, porque tiene errores en la última pregunta añadida");
+                
             }
 
         }
@@ -379,7 +390,7 @@ function CargarPreguntas() {
             for (var j = 0; j < respuestas.length; j++) {
                 var res = document.createElement("input");
                 res.type = "Radio";
-                res.name = "rspt";
+                res.name = "rspt"+i;
 
                 var lab = document.createElement("label");
                 lab.className="labRes";
@@ -659,8 +670,22 @@ function BEliminar(contPregunta) {
     eliminar.className="BotonBorrar";
     contPregunta.appendChild(eliminar);
     eliminar.onclick=function(){
-        //confirm
-        db.collection("Examen1").doc(contPregunta.id).delete();
+        Swal.fire({
+            title: '¿Seguro que quiere eliminar la pregunta?',
+            text: "No podrá recuperar la pregunta",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                db.collection("Examen1").doc(contPregunta.id).delete();
+                setTimeout(() => { window.location.reload(); }, 2000);
+            }
+          })
+        
     }
 
 }
@@ -703,12 +728,27 @@ function btnCancelar(contenedor) {
     cancelar.className = "BotonCancelar";
     contenedor.appendChild(cancelar);
     cancelar.onclick = function () {
-        (contenedor.parentNode).removeChild(contenedor);
+        Swal.fire({
+            title: '¿Seguro que quiere cancelar la pregunta?',
+            text: "No podrá recuperar la pregunta",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                (contenedor.parentNode).removeChild(contenedor);
+            }
+          })
+        
     }
 }
 
 function controlF() {
     var confirm = true;
+    var mensaje="";
     if (examen.childNodes.length > 3 && examen.childNodes[examen.childNodes.length - 2].className == "Pregunta") {
         var preguntConfirm = examen.childNodes[examen.childNodes.length - 2];
         //-------------------------verificacion pregunta------------------------------
@@ -730,7 +770,7 @@ function controlF() {
         var file = preguntConfirm.childNodes[1].files[0];
         if (!file) {
             if (booltxt == false) {
-                vacio1("Debe añadir una imagen o descripción para la pregunta");
+                mensaje+="* Debe añadir una imagen o descripción para la pregunta<br>";
                 confirm = false;
             }
         } else {
@@ -738,7 +778,7 @@ function controlF() {
             if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
             } else {
-                vacio1("Formato de imagen no aceptado");
+                mensaje+="* Formato de imagen no aceptado<br>";
                 confirm = false;
             }
         }
@@ -753,7 +793,7 @@ function controlF() {
                 //  console.log(respt[j]);
                 if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                     if (respt[a] == respt[j]) {
-                        vacio1("No puede haber 2 respuestas repetidas");
+                        mensaje+="* No puede haber 2 respuestas repetidas<br>";
                         confirm = false;
                     }
                 }
@@ -770,14 +810,14 @@ function controlF() {
             }
         }
         if (vacio == "") {
-            vacio1("No puede dejar el espacio de respuestas vacío");
+            mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
         }
         if (contRes < 2 && contRes > 0) {
-            vacio1("Debe tener un mínimo de 2 respuestas");
+            mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
             confirm = false;
         }
         if (contRes > 12) {
-            vacio1("Debe tener un máximo de 12 respuestas");
+            mensaje+="* Debe tener un máximo de 12 respuestas<br>";
         }
         //----------------------verificar respuesta correcta------------------
         var resC = preguntConfirm.childNodes[5].value;
@@ -800,7 +840,7 @@ function controlF() {
                     }
                 }
                 if (!conf) {
-                    vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                    mensaje+="* La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas<br>";
                     confirm = false;
                 }
             }
@@ -808,12 +848,12 @@ function controlF() {
         if (preguntConfirm.childNodes[3].value == "Solución única") {
             if (contRC > 1) {
                 confirm = false;
-                vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+                mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
             }
         } else {
             if (contRC <= 1) {
                 confirm = false;
-                vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+                mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
             } else {
                 //--------------verificar repetidos-----------------------------------
                 for (var f = 0; f < resC.length - 1; f++) {
@@ -822,7 +862,7 @@ function controlF() {
                         //  console.log(respt[j]);
                         if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                             if (resC[f] == resC[g]) {
-                                vacio1("No puede haber 2 respuestas correctas repetidas");
+                                mensaje+="* No puede haber 2 respuestas correctas repetidas<br>";
                                 confirm = false;
                             }
                         }
@@ -832,7 +872,7 @@ function controlF() {
             }
         }
         if (vacio2 == "") {
-            vacio1("No puede dejar el espacio de respuesta correcta vacío");
+            mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
         }
         if (confirm) {
             preguntConfirm.childNodes[0].disabled = true;
@@ -844,7 +884,10 @@ function controlF() {
             btnEditarCont(preguntConfirm);
         }
     }
-
+    if(!confirm){
+        mensaje+="¡No puede agregar otra pregunta, porque tiene errores en la última pregunta añadida!";
+        MostrarMensaje(mensaje);
+    }
     return confirm;
 }
 function btnEditarCont(conte) {
@@ -952,10 +995,10 @@ function btnHabilitar(contExamen, conte) {
 }
 
 function controlEdicion2(conte) {
-    console.log("+++++++++++");
-    console.log(conte);
-    console.log("++++++++++++++");
-    
+   // console.log("+++++++++++");
+   // console.log(conte);
+   // console.log("++++++++++++++");
+    var mensaje="";
     var confirm = true;
 
     var preguntConfirm = conte;
@@ -979,7 +1022,7 @@ function controlEdicion2(conte) {
     if (!file) {
         
         if (booltxt == false && preguntConfirm.childNodes[1].scr=="") {
-            vacio1("Debe añadir una imagen o descripción para la pregunta");
+            mensaje+="* Debe añadir una imagen o descripción para la pregunta";
             confirm = false;
         }
     } else {
@@ -987,7 +1030,7 @@ function controlEdicion2(conte) {
         if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
         } else {
-            vacio1("Formato de imagen no aceptado");
+            mensaje+="* Formato de imagen no aceptado<br>";
             confirm = false;
         }
     }
@@ -1002,7 +1045,7 @@ function controlEdicion2(conte) {
             //  console.log(respt[j]);
             if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                 if (respt[a] == respt[j]) {
-                    vacio1("No puede haber 2 respuestas repetidas");
+                    mensaje+="* No puede haber 2 respuestas repetidas<br>";
                     confirm = false;
                 }
             }
@@ -1019,14 +1062,14 @@ function controlEdicion2(conte) {
         }
     }
     if (vacio == "") {
-        vacio1("No puede dejar el espacio de respuestas vacío");
+        mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
     }
     if (contRes < 2 && contRes > 0) {
-        vacio1("Debe tener un mínimo de 2 respuestas");
+        mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
         confirm = false;
     }
     if (contRes > 12) {
-        vacio1("Debe tener un máximo de 12 respuestas");
+        mensaje+="* Debe tener un máximo de 12 respuestas<br>";
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[6].value;
@@ -1049,7 +1092,7 @@ function controlEdicion2(conte) {
                 }
             }
             if (!conf) {
-                vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                mensaje+="* La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas<br>";
                 confirm = false;
             }
         }
@@ -1057,12 +1100,12 @@ function controlEdicion2(conte) {
     if (preguntConfirm.childNodes[4].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+            mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1071,7 +1114,7 @@ function controlEdicion2(conte) {
                     //  console.log(respt[j]);
                     if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                         if (resC[f] == resC[g]) {
-                            vacio1("No puede haber 2 respuestas correctas repetidas");
+                            mensaje+="* No puede haber 2 respuestas correctas repetidas<br>";
                             confirm = false;
                         }
                     }
@@ -1081,7 +1124,11 @@ function controlEdicion2(conte) {
         }
     }
     if (vacio2 == "") {
-        vacio1("No puede dejar el espacio de respuesta correcta vacío");
+        mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
+    }
+    if(!confirm){
+        mensaje+="No se puede aceptar la edición";
+        MostrarMensaje(mensaje);
     }
 
 
@@ -1092,7 +1139,7 @@ function controlEdicion2(conte) {
 function controlEdicion(conte) {
     
     var confirm = true;
-
+    var mensaje="";
     var preguntConfirm = conte;
     //-------------------------verificacion pregunta------------------------------
     var booltxt = false;
@@ -1114,7 +1161,7 @@ function controlEdicion(conte) {
     if (!file) {
         
         if (booltxt == false) {
-            vacio1("Debe añadir una imagen o descripción para la pregunta");
+            mensaje+="* Debe añadir una imagen o descripción para la pregunta<br>";
             confirm = false;
         }
     } else {
@@ -1122,7 +1169,7 @@ function controlEdicion(conte) {
         if (formato[1] == "jpg" || formato[1] == "png" || formato[1] == "gif" || formato[1] == "jpeg") {
 
         } else {
-            vacio1("Formato de imagen no aceptado");
+            mensaje+="* Formato de imagen no aceptado<br>";
             confirm = false;
         }
     }
@@ -1137,7 +1184,7 @@ function controlEdicion(conte) {
             //  console.log(respt[j]);
             if (/\w/.test(respt[a]) && /\w/.test(respt[j])) {
                 if (respt[a] == respt[j]) {
-                    vacio1("No puede haber 2 respuestas repetidas");
+                    mensaje+="* No puede haber 2 respuestas repetidas<br>";
                     confirm = false;
                 }
             }
@@ -1154,14 +1201,14 @@ function controlEdicion(conte) {
         }
     }
     if (vacio == "") {
-        vacio1("No puede dejar el espacio de respuestas vacío");
+        mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
     }
     if (contRes < 2 && contRes > 0) {
-        vacio1("Debe tener un mínimo de 2 respuestas");
+        mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
         confirm = false;
     }
     if (contRes > 12) {
-        vacio1("Debe tener un máximo de 12 respuestas");
+        mensaje+="* Debe tener un máximo de 12 respuestas<br>";
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[5].value;
@@ -1184,7 +1231,7 @@ function controlEdicion(conte) {
                 }
             }
             if (!conf) {
-                vacio1("La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas");
+                mensaje+="* La respuesta correcta \"" + y + "\" no se encuentra dentro del conjunto de respuestas<br>";
                 confirm = false;
             }
         }
@@ -1192,12 +1239,12 @@ function controlEdicion(conte) {
     if (preguntConfirm.childNodes[3].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta");
+            mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            vacio1("La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta");
+            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1206,7 +1253,7 @@ function controlEdicion(conte) {
                     //  console.log(respt[j]);
                     if (/\w/.test(respt[f]) && /\w/.test(respt[g])) {
                         if (resC[f] == resC[g]) {
-                            vacio1("No puede haber 2 respuestas correctas repetidas");
+                            mensaje+="* No puede haber 2 respuestas correctas repetidas<br>";
                             confirm = false;
                         }
                     }
@@ -1216,10 +1263,13 @@ function controlEdicion(conte) {
         }
     }
     if (vacio2 == "") {
-        vacio1("No puede dejar el espacio de respuesta correcta vacío");
+        mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
     }
 
-
+    if(!confirm){
+        mensaje+="No se puede guardar la edidción";
+        MostrarMensaje(mensaje);
+    }
 
     return confirm;
 }
@@ -1255,6 +1305,22 @@ function vacio1(texto){
         icon: 'error',
         title: 'Error',
         text: texto,
+        
+      });
+}
+function MostrarMensaje(texto){
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: texto,
+        
+      });
+}
+function calificar(calif,icono){
+    Swal.fire({
+        icon: icono,
+        
+        html: "Su calificación es:<br>"+calif,
         
       });
 }
