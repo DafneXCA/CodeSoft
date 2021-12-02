@@ -32,11 +32,10 @@ db.collection("Subtemas1").get().then(function (BaseSubtemas) {
 /*-------------------------------Cargar Subtemas------------------------------*/
 function CargarSubtemas() {
     if (L_subtemas.length == 0) {
-       setTimeout(() => { }, 2000);
+        setTimeout(() => { }, 2000);
         //crearSubtema();
 
     } else {
-
         setTimeout(() => { }, 1);
         var divTemas = cont.getElementsByClassName("TemaC");
         for(var q=0;q<L_subtemas.length;q++){
@@ -66,32 +65,28 @@ function CargarSubtemas() {
 
 
                 for (var t = 0; t < divTemas.length; t++) {
-                    
                     if (divTemas[t].id == L_subtemas[i].Descripcion.Tema) {
                         ContTemas = divTemas[t];
                         
-                         var divSubtitulo = document.createElement("div");
+                var divSubtitulo = document.createElement("div");
 
-                        ContTemas.appendChild(divSubtitulo);
+                ContTemas.appendChild(divSubtitulo);
 
-                         var divContSub = document.createElement("div");
-                         divContSub.className = "Subtitulo";
-                        divContSub.id = L_subtemas[i].ID;
-                        var subtitulo = document.createElement("h3");
+                var divContSub = document.createElement("div");
+                divContSub.className = "Subtitulo";
+                divContSub.id = L_subtemas[i].ID;
+                var subtitulo = document.createElement("h3");
 
-                         subtitulo.innerHTML = L_subtemas[i].Descripcion.Contenido;
-                         divContSub.appendChild(subtitulo);
-                        divSubtitulo.appendChild(divContSub);
-                         //Recuperar ID
+                subtitulo.innerHTML = L_subtemas[i].Descripcion.Contenido;
+                divContSub.appendChild(subtitulo);
+                divSubtitulo.appendChild(divContSub);
+                //Recuperar ID
 
-                         divContSub.appendChild(ID);
-                         // cont.appendChild(divContSub);
-                         if(localStorage.getItem("Rol")!="Estudiante"){
-                            Editar(divContSub);
-                            Borrar(divContSub);
-                            Añadir(divContSub);
-                         }
-                       
+                divContSub.appendChild(ID);
+                // cont.appendChild(divContSub);
+                Editar(divContSub);
+                Borrar(divContSub);
+                Añadir(divContSub);
                     }
                 }
 
@@ -150,11 +145,9 @@ function CargarSubtemas() {
 
                 // var ultimoSubtema = cont.lastChild;
                 // ultimoSubtema.appendChild(lista);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(lista);
                 Borrar(lista);
                 Añadir(lista);
-                }
 
             }
             /*----------------------------PARRAFO---------------------------*/
@@ -208,11 +201,9 @@ function CargarSubtemas() {
                 }
 
                 parrafo.appendChild(ID);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(parrafo);
                 Borrar(parrafo);
                 Añadir(parrafo);
-                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -266,11 +257,9 @@ function CargarSubtemas() {
                 }
 
                 divImagen.appendChild(ID);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 EditarI(divImagen);
                 Borrar(divImagen);
                 Añadir(divImagen);
-                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -333,7 +322,7 @@ function AceptarEI(contenedor) {
         var file = contenedor.childNodes[0].files[0];
         if (!file) {
             
-            vacio("No se seleccionó ninguna imagen");
+            alert("No se seleccionó ninguna imagen");
         } else {
             console.log(file);
             var formato=(file.type).split("/");
@@ -343,7 +332,7 @@ function AceptarEI(contenedor) {
                 contenedor.parentNode.childNodes[2].style.display = "inline";
                 contenedor.parentNode.childNodes[3].style.display = "inline";
                 contenedor.parentNode.childNodes[4].style.display = "inline";
-                var storageRef = storage.ref('/Nivel1/' + file.name + Math.random());
+                var storageRef = storage.ref('/Nivel2/' + file.name + Math.random());
                 var uploadTask = storageRef.put(file);
                 var urlImg;
     
@@ -360,7 +349,7 @@ function AceptarEI(contenedor) {
     
                 });
              }else{
-                 vacio("Formato de imagen no aceptado");
+                 alert("Formato de imagen no aceptado");
              }
             
         }
@@ -510,16 +499,13 @@ function AceptarE(contenedor) {
                 db.collection("Subtemas1").doc(contenedor.parentNode.id).update({
                     subtema: { Contenido: cadof, Tema: contenedor.parentNode.parentNode.parentNode.id, ID: Number(contenedor.parentNode.childNodes[1].innerHTML), Tipo: contenedor.id }
                 })
-                }else{
-                    vacio("No se puede actualizar, solo contiene espacios en blanco");
-                   
                 }
             }
 
             setTimeout(() => { window.location.reload(); }, 2000);
            
         } else {
-            vacio("No se puede actualizar, solo contiene espacios en blanco");
+            alert("No se puede actualizar, solo contiene espacios en blanco");
         }
     }
 }
@@ -537,7 +523,7 @@ function CancelarE(contenedor) {
             if (i == 0) {
                 (contenedor.parentNode).childNodes[i].style.display = 'block';
             } else {
-                if(i == 1){
+                if(i==1){
                     (contenedor.parentNode).childNodes[i].style.display = 'none';
                 }else{
                     (contenedor.parentNode).childNodes[i].style.display = 'inline';
@@ -667,18 +653,17 @@ function aceptarI(contenedor) {
         var file = contenedor.childNodes[0].files[0];
         
         if (!file) {
-            vacio("No se seleccionó ninguna imagen");
+            alert("No se seleccionó ninguna imagen");
         } else {
             var formato=(file.type).split("/");
             if(formato[1]=="jpg" ||formato[1]=="png" || formato[1]=="gif" || formato[1]=="jpeg"){
+            var storageRef = storage.ref('/Nivel2/' + file.name + Math.random());
+            var uploadTask = storageRef.put(file);
+            var urlImg;
 
-                var storageRef = storage.ref('/Nivel1/' + file.name + Math.random());
-                var uploadTask = storageRef.put(file);
-                var urlImg;
-
-                uploadTask.on('state_changed', function (snapshot) { }, function (error) {
+            uploadTask.on('state_changed', function (snapshot) { }, function (error) {
                 console.log(error);
-                }, function () {
+            }, function () {
 
                 uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
                     urlImg = url;
@@ -686,11 +671,10 @@ function aceptarI(contenedor) {
                     cargarDatos(urlImg, contenedor);
                 });
 
-                });
-            }else{
-                vacio("Formato de imagen no aceptado");
-            }
-            
+            });
+        }else{
+            alert("Formato de imagen no aceptado");
+        }
         }
     }
 
@@ -756,7 +740,6 @@ function Borrar(subtema) {
                 setTimeout(() => { window.location.reload(); }, 2000);
             }
           })
-       
         
     }
 }
@@ -774,6 +757,7 @@ function cancelar(subtema) {
 }
 /*-------------------------------Boton Aceptar----------------------------*/
 function aceptar(subtema) {
+   
     var aceptar = document.createElement("icon");
     // aceptar.innerHTML = "Aceptar";
     aceptar.className="BotonAceptar";
@@ -781,7 +765,9 @@ function aceptar(subtema) {
     aceptar.onclick = function () {
         console.log(y);
 
-
+        console.log("----------------------");
+        console.log(subtema);
+        console.log("----------------------");
         if (subtema.id == "Subtitulo") {
             var x = subtema.firstChild.value;
             if (/\w/.test(x)) {
@@ -890,8 +876,7 @@ function aceptar(subtema) {
             }else{
                 vacio("No puede dejar este espacion en blanco");
             }
-                
-            }
+        }
 
 
      }
@@ -954,14 +939,6 @@ function aceptar(subtema) {
         divST.appendChild(auxiliar);
         aceptar(auxiliar);
         cancelar(auxiliar);
-    }
-    function vacio(texto){
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: texto,
-            
-          });
     }
 /*
 function crearSubtema() {

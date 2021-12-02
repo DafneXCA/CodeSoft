@@ -1,5 +1,10 @@
 
-
+var n1= document.getElementById("N1");
+var n2= document.getElementById("N2");
+var n3= document.getElementById("N3");
+n1.style.display="none";
+n2.style.display="none";
+n3.style.display="none";
 /*----------------Base de datos------------------------------------*/
   // Import the functions you need from the SDKs you need
   const firebaseConfig = {
@@ -115,4 +120,31 @@ Eliminar.onclick=function(){
             location.href="../../index.html";
         },2000); 
         }
+}
+if(localStorage.getItem("Nivel1")=="SI" && Number(localStorage.getItem("Nota1"))>51){
+    n1.style.display="inline";
+}
+if(localStorage.getItem("Nivel2")=="SI" && Number(localStorage.getItem("Nota2"))>51){
+    n2.style.display="inline";
+}
+if(localStorage.getItem("Nivel3")=="SI" && Number(localStorage.getItem("Nota3"))>51){
+    n3.style.display="inline";
+}
+var nota1= document.getElementById("nota1");
+var nota2= document.getElementById("nota2");
+var nota3= document.getElementById("nota3");
+nota1.style.display="none";
+nota2.style.display="none";
+nota3.style.display="none";
+if(localStorage.getItem("Nivel1")=="SI"){
+    nota1.style.display="block";
+    nota1.innerHTML+="  "+ localStorage.getItem("Nota1")+ " puntos";
+}
+if(localStorage.getItem("Nivel2")=="SI"){
+    nota2.style.display="block";
+    nota2.innerHTML+= "  "+localStorage.getItem("Nota2")+ " puntos";
+}
+if(localStorage.getItem("Nivel3")=="SI"){
+    nota3.style.display="inline";
+    nota3.innerHTML+= "  "+localStorage.getItem("Nota3")+ " puntos";
 }

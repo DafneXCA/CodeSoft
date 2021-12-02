@@ -86,12 +86,9 @@ function CargarSubtemas() {
 
                          divContSub.appendChild(ID);
                          // cont.appendChild(divContSub);
-                         if(localStorage.getItem("Rol")!="Estudiante"){
-                            Editar(divContSub);
-                            Borrar(divContSub);
-                            Añadir(divContSub);
-                         }
-                       
+                         Editar(divContSub);
+                          Borrar(divContSub);
+                        Añadir(divContSub);
                     }
                 }
 
@@ -150,11 +147,9 @@ function CargarSubtemas() {
 
                 // var ultimoSubtema = cont.lastChild;
                 // ultimoSubtema.appendChild(lista);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(lista);
                 Borrar(lista);
                 Añadir(lista);
-                }
 
             }
             /*----------------------------PARRAFO---------------------------*/
@@ -208,11 +203,9 @@ function CargarSubtemas() {
                 }
 
                 parrafo.appendChild(ID);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 Editar(parrafo);
                 Borrar(parrafo);
                 Añadir(parrafo);
-                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -266,11 +259,9 @@ function CargarSubtemas() {
                 }
 
                 divImagen.appendChild(ID);
-                if(localStorage.getItem("Rol")!="Estudiante"){
                 EditarI(divImagen);
                 Borrar(divImagen);
                 Añadir(divImagen);
-                }
                 // setTimeout(() => { }, 500000);
             }
 
@@ -512,7 +503,6 @@ function AceptarE(contenedor) {
                 })
                 }else{
                     vacio("No se puede actualizar, solo contiene espacios en blanco");
-                   
                 }
             }
 
@@ -537,11 +527,12 @@ function CancelarE(contenedor) {
             if (i == 0) {
                 (contenedor.parentNode).childNodes[i].style.display = 'block';
             } else {
-                if(i == 1){
+                if(i==1){
                     (contenedor.parentNode).childNodes[i].style.display = 'none';
                 }else{
                     (contenedor.parentNode).childNodes[i].style.display = 'inline';
                 }
+               
             }
 
         }
@@ -774,6 +765,7 @@ function cancelar(subtema) {
 }
 /*-------------------------------Boton Aceptar----------------------------*/
 function aceptar(subtema) {
+   
     var aceptar = document.createElement("icon");
     // aceptar.innerHTML = "Aceptar";
     aceptar.className="BotonAceptar";
@@ -781,7 +773,9 @@ function aceptar(subtema) {
     aceptar.onclick = function () {
         console.log(y);
 
-
+        console.log("----------------------");
+        console.log(subtema);
+        console.log("----------------------");
         if (subtema.id == "Subtitulo") {
             var x = subtema.firstChild.value;
             if (/\w/.test(x)) {
@@ -890,8 +884,7 @@ function aceptar(subtema) {
             }else{
                 vacio("No puede dejar este espacion en blanco");
             }
-                
-            }
+        }
 
 
      }
@@ -955,6 +948,7 @@ function aceptar(subtema) {
         aceptar(auxiliar);
         cancelar(auxiliar);
     }
+
     function vacio(texto){
         Swal.fire({
             icon: 'error',

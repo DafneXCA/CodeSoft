@@ -89,16 +89,16 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             Correo: localStorage.getItem("Correo"),
             Contraseña: localStorage.getItem("Contraseña"),
             Rol: "Estudiante",
-            Nivel1: localStorage.getItem("Nivel1"),
+            Nivel1: "SI",
             Nivel2: localStorage.getItem("Nivel2"),
             Nivel3: localStorage.getItem("Nivel3"),
-            Nota1: localStorage.getItem("Nota1"),
+            Nota1: nota,
             Nota2: localStorage.getItem("Nota2"),
             Nota3: localStorage.getItem("Nota3")
             
             }
         })
-        setTimeout(()=>{window.location.reload();},1000); 
+        setTimeout(()=>{window.location.reload();},2000); 
     }
 }else{
     BAceptar.onclick = function () {
