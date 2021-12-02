@@ -61,9 +61,12 @@ var Nivel= document.getElementById("cont");
         Tema.appendChild(Titulo);
         indice.insertBefore(Tema,nuevoTema);
         //Botones
-        botonEditar(Tema);
-        botonBorrar(Tema);
-        botonAñadir(Tema);
+
+        if(localStorage.getItem("Rol")!="Estudiante"){
+            botonEditar(Tema);
+            botonBorrar(Tema);
+            botonAñadir(Tema);
+        }
         var tituloAux=document.createElement("input");
         tituloAux.type="text";
         tituloAux.value=Titulo.innerHTML;
