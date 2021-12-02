@@ -30,7 +30,7 @@ db.collection("Usuarios").get().then((querySnapshot)=>{
                   <td>${doc.data().Usuario.Nombre}</td>
                   <td>${doc.data().Usuario.Correo}</td>
                   <td>${doc.data().Usuario.Contraseña}</td>
-                  <td><button class= "btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
+                  <td class="eliminar"><button class= "btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
                 </tr>
         `
         }
@@ -40,6 +40,7 @@ db.collection("Usuarios").get().then((querySnapshot)=>{
 function eliminar(id){
 db.collection("Usuarios").doc(id).delete().then(function(){
     console.log("Se pudo borrar correctamente");
+    location.href="../public/reportesEst.html";
 }).catch(function(error){
     console.error("Error removing document:",error);
 });
