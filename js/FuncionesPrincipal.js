@@ -90,15 +90,15 @@ if(localStorage.getItem("Nombre")!=null){
     }
 }
 //Responsive footer
-console.log(bowser.name, bowser.version);
+//console.log(bowser.name, bowser.version);
 window.onresize= function(){
     window.location.reload();
 }
 window.onload=function(){
     var res= Math.round(window.devicePixelRatio * 100);
-    console.log(res);
+    //console.log(res);
     var ancho = window.innerWidth;
-    console.log(ancho);
+    //console.log(ancho);
     if(res<=83 && ancho<=1200 && ancho> 1023){
         var foo=document.getElementsByClassName("footer");
         foo[0].style.position="absolute";
@@ -115,7 +115,7 @@ window.onload=function(){
 setTimeout(()=>{
     if(localStorage.getItem("Id")==null || localStorage.getItem("Id")== "undefined"){
         var aux;
-        console.log(Usuarios);
+        //console.log(Usuarios);
         for(var i=0; i<Usuarios.length;i++){
             if(localStorage.getItem("Correo")==Usuarios[i].Descripcion.Correo){
                 aux=Usuarios[i].ID;

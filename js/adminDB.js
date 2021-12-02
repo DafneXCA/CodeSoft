@@ -89,21 +89,21 @@ let regexNombre=/^[A-Za-z\s]+$/
     var mensaje= ""  
     if(name.value.length<1 && email.value.length<1 && pasword.value.length<1 && pasword2.value.length<1){
       parrafo.innerHTML="Ingrese todos los espacios vacíos"
-      window.alert("Ingrese todos los espacios vacíos");
+      vacio("Ingrese todos los espacios vacíos");
       entrar=true;
       res=true;
     }
     if(name.value.length<1 || email.value.length<1 || pasword.value.length<1 || pasword2.value.length<1){
       if(entrar==false){
       mensaje=mensaje+"*Ingrese todos los espacios vacíos <br>"
-      window.alert("Ingrese todos los espacios vacíos");
+      
       res=true;
       }
     }
     if(!regexNombre.test(name.value) && entrar==false ){
       if(name.value!=""){
       mensaje=mensaje+"*No ingrese Caracteres especiales o números en Nombre <br>"
-      window.alert("No ingrese Caracteres especiales o numéricos en Nombre");
+      
       }
       res=true;
     }
@@ -116,7 +116,7 @@ let regexNombre=/^[A-Za-z\s]+$/
     if(name.value.length <6 && entrar==false){
       if(name.value!=""){
         mensaje=mensaje+"*Nombre muy corto <br> "      
-        window.alert("Nombre muy corto");
+        
       }
         res=true;
     }
@@ -124,7 +124,7 @@ let regexNombre=/^[A-Za-z\s]+$/
     if(!regexEmail.test(email.value) && entrar==false){
       if(email.value!=""){
         mensaje=mensaje+"*El email no es valido<br> "    
-        window.alert("El email no es valido");
+        
       }
         res=true;
     }
@@ -132,38 +132,39 @@ let regexNombre=/^[A-Za-z\s]+$/
     if(pasword.value.length < 8  && entrar==false){
       if(pasword.value!=""){
         mensaje=mensaje+"*La contraseña es muy corta <br> " 
-        window.alert("La contraseña es muy corta");
+        
       }
         res=true;
     }
     if(pasword.value.length>20 && entrar==false){
       mensaje=mensaje+"*La contraseña es muy larga <br> "
-      window.alert("La contraseña es muy larga");
+      
       res=true;
   }
   
     if(pasword2.value.length < 8 && pasword2.value.length<20 && entrar==false){
       if(pasword2.value!=""){
         mensaje=mensaje+"*La Confirmación de la contraseña es muy corta <br> "
-        window.alert("La Confirmación de la contraseña es muy corta");
+        
       }
         res=true;
     }
     if(pasword2.value.length>20 && entrar==false){
       mensaje=mensaje+"*La Confirmación de la contraseña es muy larga <br> "
-      window.alert("La Confirmación de la contraseña es muy larga");
+      
       res=true;
   }
   
     if(pasword2.value != pasword.value && entrar==false){
       if(pasword.value!="" && pasword2.value!=""){
         mensaje=mensaje+"*Las contraseñas no son iguales <br> "
-        window.alert("Las contraseñas no son iguales");
+        
       }
         res=true;
     }
     if(entrar==false){
     parrafo.innerHTML = mensaje 
+    html(mensaje);
     }  
     if(res==false) {
     //Aqui comprueba si existe un usuario con ese correo
@@ -192,4 +193,19 @@ let regexNombre=/^[A-Za-z\s]+$/
        }
     }
     return encontrado;
+}
+function vacio(texto){
+  Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: texto,
+      
+    });
+}
+function html(men){
+  Swal.fire({
+    title: 'Error',
+    icon: 'error',
+    html: men
+  })
 }

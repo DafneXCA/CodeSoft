@@ -27,7 +27,7 @@ const firebaseConfig = {
     var sesion=document.getElementById("Sesion");
     sesion.onclick=function(){
         if(correo.value==""||contraseña.value==""){
-            alert("Llene todos los campos");
+            vacio("Llene todos los campos");
         }else{
             if(Existe(correo.value,contraseña.value)==1){
                 var perfil=Usuario(correo.value,contraseña.value);
@@ -52,7 +52,7 @@ const firebaseConfig = {
                 }
                 
             }else{
-                alert("Datos incorrectos");
+                vacio("Datos incorrectos");
             }
         }
 
@@ -78,6 +78,14 @@ const firebaseConfig = {
         }
         return encontrado;
     }
+    function vacio(texto){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: texto,
+            
+          });
+      }
     
    
     
