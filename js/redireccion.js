@@ -1,4 +1,4 @@
-if(localStorage.getItem("Rol")!="Administrador" && localStorage.getItem("Rol")!="Estudiante"){
+if(localStorage.getItem("Rol")!="Administrador" && localStorage.getItem("Rol")!="Estudiante" && localStorage.getItem("Rol")!="Docente"){
     location.href="../index.html";
 }
  var contenedor =document.getElementById("contenedor_carga");

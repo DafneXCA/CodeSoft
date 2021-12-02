@@ -49,6 +49,9 @@ const firebaseConfig = {
                         localStorage.setItem("Nota3",perfil.Descripcion.Nota3);
                         location.href="../index.html";
                     }
+                    if(localStorage.getItem("Rol")=="Docente"){
+                        location.href="../index.html";
+                    }
                 }
                 
             }else{
