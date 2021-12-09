@@ -238,6 +238,23 @@ footer{
     height: 25px;
 }
 
+.contacto a{
+    color: #eff3f5;
+    font-size: 12px;
+    margin-right: 9px;
+    text-decoration: none;
+    border-radius: .25rem;
+    background-color: cadetblue;
+    /*background-color: royalblue; */
+    padding: 0.4rem 0.4rem;
+    margin-inline-start: auto;
+}
+
+.contacto a:hover{
+    color: darkblue;
+}
+
+
 /*      RESPONSIVE    */
 
 .grid {

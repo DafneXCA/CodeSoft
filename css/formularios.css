@@ -193,6 +193,10 @@ header{
     padding-top: 20px;
 }
 
+.ComboBox{
+    margin-left: 10px;
+}
+
 /* Fin seccion formulario */
 
 .warnings{

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/formularios.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+  <style type="text/css"> textarea { resize : none; } </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <title> Solicitudes | Contabilidad para todos</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+
+    <div class="grid"> 
+        <!-- INICIO DEL HEADER -->
+    
+        <header class="header">
+          <div class="contenedor head">
+            <a href="../index.html" class="logo">
+              <img src="../img/Logo.png" alt="LogoContabilidad" />
+            </a>
+            <h3 class="tituloPlataforma">
+              Contabilidad para <br />
+              Todos
+            </h3>
+    
+                <a href="../index.html" class="BtnHome">
+                  <span class="material-icons-outlined IconHome"> home </span>
+                  <p class="Home">Inicio</p>
+                </a>
+          </div>
+
+        </header>
+
+          <!-- FIN DEL HEADER -->
+
+          <!-- SECCIÓN PERFIL DE ADMINISTRADOR -->
+
+          <section class="formulario">
+        <div class="contenedor">
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <h1 class="tituloRegistrarse">¿Cuéntanos en que te podemos ayudar?</h1> 
+                <form role="form">
+                  <div class="CajaFormulario">
+                    <div class="ElementosFormulario">
+                      <div class="form-group">
+                        <label>Nombre Completo</label> 
+                        <input type="text" placeholder="Ingrese el nombre completo " class="form-control" id="Nombre">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>Correo Electrónico</label> 
+                        <input type="email" placeholder="Ingrese el correo electrónico" class="form-control" id="Correo">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Categoría</label> 
+                        <select id="ComboBox" name="Categoria" class="ComboBox">
+                          <option value="Consulta">Consulta general</option>
+                          <option value="Error">Reporte de error</option>
+                          <option value="Correcccion">Arreglo de contenido</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Descripción</label> 
+                        <textarea  id="Descripcion" rows="5" cols="30" class="form-control"></textarea>
+                      </div>
+                      <div>
+                        <h5 class="alerta">Llene todos los espacios vacíos</h5>
+                        <h5 class="alerta">El email no es válido</h5>
+                        <h5 class="alerta">La descripción es muy larga</h5>
+                        <h5 class="alerta">Nombre no válido</h5>
+                        <h5 class="alerta">Nombre muy corto</h5>
+                        <h5 class="alerta">Nombre muy largo</h5>
+                      </div>
+                      <div><br>
+                        <label class="btn btn-lg btn-primary btn-block" type="submit" id="Enviar"><strong>Enviar</strong></label><br>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <script src="../js/Peticiones.js"></script>
+          
+</body>
+  
+
+</html>
