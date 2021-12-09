@@ -2,11 +2,12 @@ var examen = document.createElement("div");
 examen.id = "Examen";
 var Preguntas = [];
 var cont = document.getElementById("cont");
-//var storageRef = storage.ref();
+var storageRef = storage.ref();
 var BAceptar = document.createElement("button");
 
 var Titulo = document.createElement("h2");
 Titulo.innerHTML = "EXAMEN";
+
 
 examen.appendChild(BAceptar);
 examen.appendChild(Titulo);
@@ -75,6 +76,7 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                 }
             }
             //calificar
+            
             var nota=(100/PregC.length)*calificacion;
             if(nota>50){
                 calificar(nota+"/"+100,"success");
@@ -83,6 +85,7 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                 calificar(nota+"/"+100,"error");
                 setTimeout(()=>{},500); 
             }
+            
             localStorage.setItem("Nota2", nota);
             localStorage.setItem("Nivel2","SI");
             //guardar nota en perfil
@@ -100,7 +103,9 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             Nota3: localStorage.getItem("Nota3")
             
             }
+
         })
+        
         setTimeout(()=>{window.location.reload();},2000); 
         }else{
 
@@ -116,8 +121,19 @@ if (localStorage.getItem("Rol") == "Estudiante") {
         if (PreguntasOb.length > 0) {
     
             if (controlF()) {
+                var contenedor4 =document.getElementById("contenedor_carga");
+                contenedor4.style.display="block";
+                contenedor4.style.visibility="visible";
+                contenedor4.style.opacity="2";
                 for (var i = 0; i < PreguntasOb.length; i++) {
-                    ObtenerPregunta(PreguntasOb[i]);
+
+                    if(i==PreguntasOb.length-1){
+                        ObtenerPregunta(PreguntasOb[i],true);  
+                    }else{
+                        ObtenerPregunta(PreguntasOb[i],false);
+                    }
+                    
+                    console.log(i);
                     /* var preg = ObtenerPregunta(PreguntasOb[i]);
                      let Pregunta = preg;
                      var res = ObtenerRespuestas(PreguntasOb[i]);
@@ -129,7 +145,8 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                      console.log(pregunta);*/
                     // GuardarPregunta(Subtema);
                 }
-                setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
+                console.log("????");
+                //setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
     
             } else {
                 vacio1("Revise la última pregunta antes de guardar");
@@ -145,8 +162,8 @@ if (localStorage.getItem("Rol") == "Estudiante") {
 
 
 //-----------------------Obtener Pregunta-------------------------
-function ObtenerPregunta(pregunta) {
-
+function ObtenerPregunta(pregunta,ultimo) {
+    console.log("!!!!");
     var texto = pregunta.firstChild.value;
     var parrafoaux = "";
     if (texto != "") {
@@ -165,37 +182,49 @@ function ObtenerPregunta(pregunta) {
 
         }
     }
-
+    console.log("!!!!------");
     var file = pregunta.childNodes[1].files[0];
 
     if (!file) {
+      
+        
         parrafoaux = parrafoaux + "<*>";
-        GuardarPreguntan(pregunta, parrafoaux);
+        GuardarPreguntan(pregunta, parrafoaux,ultimo);
     } else {
+        
         var storageRef = storage.ref('/ExamenNiv2/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
         var urlImg;
-
+        console.log("!!!!????");
+        
         uploadTask.on('state_changed', function (snapshot) { }, function (error) {
             console.log(error);
+            
         }, function () {
-
+           console.log("!!!!+++++++++++");
+           console.log(uploadTask.snapshot.ref.getDownloadURL());
             uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
                 urlImg = url;
-                console.log(url);
+                console.log(urlImg);
+                console.log("!!!!");
                 parrafoaux = parrafoaux + "<*>" + urlImg;
-                GuardarPreguntan(pregunta, parrafoaux);
+               
+                GuardarPreguntan(pregunta, parrafoaux,ultimo);
 
-                console.log(parrafoaux);
+                //console.log(parrafoaux);
 
             });
-
+            
         });
+        
+        setTimeout(() => {  },5000);
+
     }
 
-    return parrafoaux;
+   
 }
-function GuardarPreguntan(preguntan, pregCom) {
+function GuardarPreguntan(preguntan, pregCom,ultimo) {
+    console.log("FFF");
     let Pregunta = pregCom;
     var res = ObtenerRespuestas(preguntan);
     let Respuestas = res;
@@ -205,6 +234,12 @@ function GuardarPreguntan(preguntan, pregCom) {
     const pregunta = { Pregunta, Respuestas, Tipo, RespuestaC }
     console.log(pregunta);
     GuardarPregunta(pregunta);
+    if(ultimo){
+       
+        setTimeout(() => { window.location.reload(); }, 2000);
+        
+    }
+    
 }
 //.........................Obtener Respuestas.....................
 function ObtenerRespuestas(pregunta) {
@@ -291,6 +326,8 @@ db.collection("Examen2").get().then(function (BaseExamen1) {
     cont.appendChild(examen);
     }else{
         var mensaje= document.createElement("div");
+        mensaje.style.color="#ffffff";
+        mensaje.className="pm";
         mensaje.innerHTML="Usted ya rindio el examen del Nivel 2";
         mensaje.id="mensaje";
         cont.appendChild(mensaje);
@@ -335,7 +372,7 @@ function CargarPreguntas() {
                 mod.appendChild(op2);
                 mod.style.display = "block";
                 var respuestas = document.createElement("textarea");
-                respuestas.setAttribute('placeholder', "Respuestas (Separadar por saltos de línea)");
+                respuestas.setAttribute('placeholder', "Respuestas (Separar por saltos de línea)");
                 var resC = document.createElement("textarea");
                 resC.setAttribute('placeholder', "Respuesta correcta (Separar por saltos de línea en caso de haber más de una)");
                 divPreg.appendChild(preg);
@@ -534,6 +571,10 @@ function btnAE(contEd) {
        
         
         if(controlEdicion2(contEd)){
+            var contenedor4 =document.getElementById("contenedor_carga");
+                contenedor4.style.display="block";
+                contenedor4.style.visibility="visible";
+                contenedor4.style.opacity="2";
            ObtenerPregunta2(contEd,contEd.parentNode.id);
            //console.log(contEd.parentNode.id);
            
@@ -673,7 +714,7 @@ function BEliminar(contPregunta) {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si',
+            confirmButtonText: 'Sí',
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -687,14 +728,19 @@ function BEliminar(contPregunta) {
 }
 //------------------mostrar imagen--------------------
 function mostrar(a) {
-
+    
     var file = a.target.files[0];
     var reader = new FileReader();
     var imgcont = a.path[1].childNodes[2].firstChild;
+    if(imgcont==null){
+        imgcont =a.path[1].childNodes[2];
+    }
+    
     var contImg = a.path[1].childNodes[2];
     //console.log(imgcont);
     reader.onload = function (a) {
         var aux = imgcont;
+        
         aux.setAttribute('src', a.target.result);
         aux.setAttribute('width', '85%');
         aux.setAttribute('heigth', 'auto');
@@ -707,13 +753,29 @@ function btnCancelarImg(conte) {
     var cancelar = document.createElement("icon");
     // cancelar.innerHTML = "Cancelar";
     cancelar.className = "BotonCancelar";
-    conte.appendChild(cancelar);
+    if(conte.childNodes.length==1){
+        conte.appendChild(cancelar);
+    }
     cancelar.onclick = function () {
-        conte.parentNode.childNodes[1].value = "";
-        var nimg = document.createElement("img");
-        conte.insertBefore(nimg, conte.firstChild);
-        conte.removeChild(conte.childNodes[1]);
-        conte.removeChild(cancelar);
+        Swal.fire({
+            title: '¿Seguro que quiere borrar la imagen?',
+            text: "No se podrá recuperar la imagen",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                conte.parentNode.childNodes[1].value = "";
+                var nimg = document.createElement("img");
+                conte.insertBefore(nimg, conte.firstChild);
+                conte.removeChild(conte.childNodes[1]);
+                conte.removeChild(cancelar);
+            }
+          });
+        
     }
 }
 //-------------------boton Cancelar-----------------------
@@ -731,7 +793,7 @@ function btnCancelar(contenedor) {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si',
+            confirmButtonText: 'Sí',
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -780,7 +842,10 @@ function controlF() {
         }
         //----------------verificar respuestas----------------------------
         var respt = preguntConfirm.childNodes[4].value;
-
+        console.log("********************");
+        console.log( preguntConfirm.childNodes[4].value);
+        
+   //     console.log(".-. a ver que paso entra a verificar respuestas");
         respt = respt.split("\n");
         var contRes = 0;
         for (var a = 0; a < respt.length - 1; a++) {
@@ -801,12 +866,14 @@ function controlF() {
             var x = respt[m];
             //console.log(x);
             if (/\w/.test(x)) {
+      //          console.log(".-. a ver que paso aqui no debe estar aqui si esta vacio");
                 contRes++;
                 vacio = vacio + y;
             }
         }
         if (vacio == "") {
             mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
+            confirm = false;
         }
         if (contRes < 2 && contRes > 0) {
             mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
@@ -814,6 +881,7 @@ function controlF() {
         }
         if (contRes > 12) {
             mensaje+="* Debe tener un máximo de 12 respuestas<br>";
+            confirm = false;
         }
         //----------------------verificar respuesta correcta------------------
         var resC = preguntConfirm.childNodes[5].value;
@@ -844,12 +912,12 @@ function controlF() {
         if (preguntConfirm.childNodes[3].value == "Solución única") {
             if (contRC > 1) {
                 confirm = false;
-                mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
+                mensaje+="* La respuesta es de tipo solución única, no puede agregar más de una respuesta correcta<br>";
             }
         } else {
             if (contRC <= 1) {
                 confirm = false;
-                mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
+                mensaje+="* La respuesta es de tipo selección múltiple, debe agregar más de una respuesta correcta<br>";
             } else {
                 //--------------verificar repetidos-----------------------------------
                 for (var f = 0; f < resC.length - 1; f++) {
@@ -869,6 +937,7 @@ function controlF() {
         }
         if (vacio2 == "") {
             mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
+            confirm = false;
         }
         if (confirm) {
             preguntConfirm.childNodes[0].disabled = true;
@@ -901,19 +970,32 @@ function btnEditarCont(conte) {
         conte.childNodes[7].style.display = "none";
         desHabilitarResto(conte.parentNode, conte);
         btnHabilitar(conte.parentNode, conte);
-        btnCancelarE(conte.parentNode, conte);
+        var conteClon=conte.cloneNode(true);
+        console.log("++++++++++++");
+        console.log(conteClon.firstChild.value);
+        console.log(conte.firstChild.value);
+        btnCancelarE(conte.parentNode, conte,conteClon);
     }
 }
-function btnCancelarE(contExamen, ant) {
+function btnCancelarE(contExamen, ant,antclon) {
     var cancelar = document.createElement("icon");
     cancelar.className = "BotonCancelar";
     console.log("-------------------");
 
     ant.appendChild(cancelar);
     cancelar.onclick = function () {
-        var conf = confirm("¿Está seguro de cancelar la edición?");
-        if (conf) {
-            contExamen.firstChild.disabled = false;
+        Swal.fire({
+            title: '¿Está seguro de cancelar la edición?',
+            
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                contExamen.firstChild.disabled = false;
             var contExP = contExamen.getElementsByClassName("Pregunta");
             console.log(contExP);
             for (var i = 0; i < contExP.length; i++) {
@@ -928,8 +1010,13 @@ function btnCancelarE(contExamen, ant) {
                     pregExamen.childNodes[6].style.display = "inline";
                     pregExamen.childNodes[7].style.display = "inline";
                     if (ant == pregExamen) {
+
                         ant.removeChild(ant.childNodes[ant.childNodes.length - 2]);
                         ant.removeChild(ant.lastChild);
+                        ant.firstChild.value=antclon.firstChild.value;
+                        ant.childNodes[3].value=antclon.childNodes[3].value;
+                        ant.childNodes[4].value=antclon.childNodes[4].value;
+                        ant.childNodes[5].value=antclon.childNodes[5].value;
                     }
 
                 } else {
@@ -943,7 +1030,9 @@ function btnCancelarE(contExamen, ant) {
                 }
 
             }
-        }
+            }
+          })
+        
     }
 }
 function btnHabilitar(contExamen, conte) {
@@ -952,40 +1041,50 @@ function btnHabilitar(contExamen, conte) {
     conte.appendChild(btnAceptarE);
     btnAceptarE.onclick = function () {
         if (controlEdicion(conte)) {
-            var confirmar = confirm("¿Está seguro de guardar los cambios?");
-            if (confirmar) {
-                contExamen.firstChild.disabled = false;
-                var contExP = contExamen.getElementsByClassName("Pregunta");
-                console.log(contExP);
-                for (var i = 0; i < contExP.length; i++) {
-                    var pregExamen = contExP[i];
-                    console.log(pregExamen);
-                    if (i < contExP.length - 1) {
-                        pregExamen.childNodes[0].disabled = true;
-                        pregExamen.childNodes[1].disabled = true;
-                        pregExamen.childNodes[3].disabled = true;
-                        pregExamen.childNodes[4].disabled = true;
-                        pregExamen.childNodes[5].disabled = true;
-                        pregExamen.childNodes[6].style.display = "inline";
-                        pregExamen.childNodes[7].style.display = "inline";
-                        if (conte == pregExamen) {
-                            conte.removeChild(btnAceptarE);
-                            conte.removeChild(conte.lastChild);
+            Swal.fire({
+                title: '¿Está seguro de guardar los cambios?',
+                
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    contExamen.firstChild.disabled = false;
+                    var contExP = contExamen.getElementsByClassName("Pregunta");
+                    console.log(contExP);
+                    for (var i = 0; i < contExP.length; i++) {
+                        var pregExamen = contExP[i];
+                        console.log(pregExamen);
+                        if (i < contExP.length - 1) {
+                            pregExamen.childNodes[0].disabled = true;
+                            pregExamen.childNodes[1].disabled = true;
+                            pregExamen.childNodes[3].disabled = true;
+                            pregExamen.childNodes[4].disabled = true;
+                            pregExamen.childNodes[5].disabled = true;
+                            pregExamen.childNodes[6].style.display = "inline";
+                            pregExamen.childNodes[7].style.display = "inline";
+                            if (conte == pregExamen) {
+                                conte.removeChild(btnAceptarE);
+                                conte.removeChild(conte.lastChild);
+                            }
+    
+                        } else {
+    
+                            pregExamen.childNodes[0].disabled = false;
+                            pregExamen.childNodes[1].disabled = false;
+                            pregExamen.childNodes[3].disabled = false;
+                            pregExamen.childNodes[4].disabled = false;
+                            pregExamen.childNodes[5].disabled = false;
+                            pregExamen.childNodes[6].style.display = "inline";
                         }
-
-                    } else {
-
-                        pregExamen.childNodes[0].disabled = false;
-                        pregExamen.childNodes[1].disabled = false;
-                        pregExamen.childNodes[3].disabled = false;
-                        pregExamen.childNodes[4].disabled = false;
-                        pregExamen.childNodes[5].disabled = false;
-                        pregExamen.childNodes[6].style.display = "inline";
+    
                     }
-
                 }
-
-            }
+              })
+            
         }
     }
 }
@@ -1009,6 +1108,7 @@ function controlEdicion2(conte) {
             // console.log(y);
             if (/\w/.test(y)) {
                 booltxt = true;
+                console.log("palabras");
             }
 
         }
@@ -1016,9 +1116,11 @@ function controlEdicion2(conte) {
     //-------------------------varificacion pregunta img-----------------------------
     var file = preguntConfirm.childNodes[1].files[0];
     if (!file) {
-        
-        if (booltxt == false && preguntConfirm.childNodes[1].scr=="") {
-            mensaje+="* Debe añadir una imagen o descripción para la pregunta";
+        console.log("Editar-sin archivo!!!!!!!!!!!!");
+        console.log(preguntConfirm.childNodes[2].src);
+        if (booltxt == false && preguntConfirm.childNodes[2].src=="") {
+            console.log("Editar-sin archivo-entra al error---------------");
+            mensaje+="* Debe añadir una imagen o descripción para la pregunta<br>";
             confirm = false;
         }
     } else {
@@ -1059,6 +1161,7 @@ function controlEdicion2(conte) {
     }
     if (vacio == "") {
         mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
+        confirm = false;
     }
     if (contRes < 2 && contRes > 0) {
         mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
@@ -1066,6 +1169,7 @@ function controlEdicion2(conte) {
     }
     if (contRes > 12) {
         mensaje+="* Debe tener un máximo de 12 respuestas<br>";
+        confirm = false;
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[6].value;
@@ -1096,12 +1200,12 @@ function controlEdicion2(conte) {
     if (preguntConfirm.childNodes[4].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
+            mensaje+="* La respuesta es de tipo solución única, no puede agregar más de una respuesta correcta<br>";
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
+            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar más de una respuesta correcta<br>";
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1121,6 +1225,7 @@ function controlEdicion2(conte) {
     }
     if (vacio2 == "") {
         mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
+        confirm = false;
     }
     if(!confirm){
         mensaje+="No se puede aceptar la edición";
@@ -1198,6 +1303,7 @@ function controlEdicion(conte) {
     }
     if (vacio == "") {
         mensaje+="* No puede dejar el espacio de respuestas vacío<br>";
+        confirm = false;
     }
     if (contRes < 2 && contRes > 0) {
         mensaje+="* Debe tener un mínimo de 2 respuestas<br>";
@@ -1205,6 +1311,7 @@ function controlEdicion(conte) {
     }
     if (contRes > 12) {
         mensaje+="* Debe tener un máximo de 12 respuestas<br>";
+        confirm = false;
     }
     //----------------------verificar respuesta correcta------------------
     var resC = preguntConfirm.childNodes[5].value;
@@ -1235,12 +1342,12 @@ function controlEdicion(conte) {
     if (preguntConfirm.childNodes[3].value == "Solución única") {
         if (contRC > 1) {
             confirm = false;
-            mensaje+="* La respuesta es de tipo solución única, no puede agregar mas de una respuesta correcta<br>";
+            mensaje+="* La respuesta es de tipo solución única, no puede agregar más de una respuesta correcta<br>";
         }
     } else {
         if (contRC <= 1) {
             confirm = false;
-            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar mas de una respuesta correcta<br>";
+            mensaje+="* La respuesta es de tipo selección múltiple, debe agregar más de una respuesta correcta<br>";
         } else {
             //--------------verificar repetidos-----------------------------------
             for (var f = 0; f < resC.length - 1; f++) {
@@ -1260,10 +1367,11 @@ function controlEdicion(conte) {
     }
     if (vacio2 == "") {
         mensaje+="* No puede dejar el espacio de respuesta correcta vacío<br>";
+        confirm = false;
     }
 
     if(!confirm){
-        mensaje+="No se puede guardar la edidción";
+        mensaje+="No se puede guardar la edición";
         MostrarMensaje(mensaje);
     }
 
