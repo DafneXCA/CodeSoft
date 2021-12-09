@@ -35,7 +35,7 @@ Enviar.onclick=function(){
     var Aceptar=0; 
     emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     if(nombre.value==""||correo.value==""||descripcion.value==""){
-        alert("Llene todos los campos vacíos");
+        vacio("Llene todos los campos vacíos");
         Aceptar=1;
     }
         if(/^[A-Za-z\s]+$/.test(nombre.value)){
@@ -70,7 +70,15 @@ Enviar.onclick=function(){
         const Peticion={Nombre,Correo,Categoria,Descripcion};
         console.log(Peticion);
         GuardarSolicitud(Peticion);
-        alert("La petición se registró correctamente");  
+        vacio("La petición se registró correctamente");  
     }
 
  }    
+ function vacio(texto){
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: texto,
+        
+      });
+  }

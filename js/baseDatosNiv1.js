@@ -121,7 +121,7 @@ if(localStorage.getItem("Rol")=="Estudiante"){
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si,quiero eliminarlo',
+            confirmButtonText: 'Sí,quiero eliminarlo',
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
