@@ -86,8 +86,8 @@ if (localStorage.getItem("Rol") == "Estudiante") {
                 setTimeout(()=>{},500); 
             }
             
-            localStorage.setItem("Nota1", nota);
-            localStorage.setItem("Nivel1","SI");
+            localStorage.setItem("Nota3", nota);
+            localStorage.setItem("Nivel3","SI");
             //guardar nota en perfil
             db.collection("Usuarios").doc(localStorage.getItem("Id")).update({
             Usuario: 
@@ -95,12 +95,12 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             Correo: localStorage.getItem("Correo"),
             Contraseña: localStorage.getItem("Contraseña"),
             Rol: "Estudiante",
-            Nivel1: "SI",
+            Nivel1:  localStorage.getItem("Nivel1"),
             Nivel2: localStorage.getItem("Nivel2"),
-            Nivel3: localStorage.getItem("Nivel3"),
-            Nota1: nota,
+            Nivel3:"SI",
+            Nota1:  localStorage.getItem("Nota1"),
             Nota2: localStorage.getItem("Nota2"),
-            Nota3: localStorage.getItem("Nota3")
+            Nota3:nota
             
             }
 
@@ -192,7 +192,7 @@ function ObtenerPregunta(pregunta,ultimo) {
         GuardarPreguntan(pregunta, parrafoaux,ultimo);
     } else {
         
-        var storageRef = storage.ref('/ExamenNiv1/' + file.name + Math.random());
+        var storageRef = storage.ref('/ExamenNiv3/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
         var urlImg;
         console.log("!!!!????");
@@ -308,12 +308,12 @@ function ObtenerResC(pregunta) {
 
 /*--------------------Guardar Subtemas--------------------------- */
 function GuardarPregunta(pregunta) {
-    db.collection("Examen1").add({
+    db.collection("3").add({
         pregunta
     });
 }
 /*---------------Leer------------------------------*/
-db.collection("Examen1").get().then(function (BaseExamen1) {
+db.collection("Examen3").get().then(function (BaseExamen1) {
     BaseExamen1.forEach(function (doc) {
         Preguntas.push({
             Descripcion: doc.data().pregunta,
@@ -321,14 +321,14 @@ db.collection("Examen1").get().then(function (BaseExamen1) {
         });
     });
     console.log(Preguntas);
-    if(localStorage.getItem("Nivel1")=="NO" || localStorage.getItem("Rol") != "Estudiante" ){
+    if(localStorage.getItem("Nivel3")=="NO" || localStorage.getItem("Rol") != "Estudiante" ){
         CargarPreguntas();
     cont.appendChild(examen);
     }else{
         var mensaje= document.createElement("div");
         mensaje.style.color="#ffffff";
         mensaje.className="pm";
-        mensaje.innerHTML="Usted ya rindio el examen del Nivel 1";
+        mensaje.innerHTML="Usted ya rindio el examen del Nivel 3";
         mensaje.id="mensaje";
         cont.appendChild(mensaje);
     }
@@ -613,7 +613,7 @@ function ObtenerPregunta2(pregunta,id) {
         parrafoaux = parrafoaux + "<*>"+pregunta.childNodes[2].src;
         GuardarPregunta2(pregunta, parrafoaux,id);
     } else {
-        var storageRef = storage.ref('/ExamenNiv1/' + file.name + Math.random());
+        var storageRef = storage.ref('/ExamenNiv3/' + file.name + Math.random());
         var uploadTask = storageRef.put(file);
         var urlImg;
 
@@ -667,7 +667,7 @@ function GuardarPregunta2(preguntan, pregCom, id) {
     
     
     
-    db.collection("Examen1").doc(id).update({
+    db.collection("Examen3").doc(id).update({
         pregunta: { Pregunta: pregCom, Respuestas: res, Tipo: preguntan.childNodes[4].value, RespuestaC : resC }
     })
     setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
@@ -718,7 +718,7 @@ function BEliminar(contPregunta) {
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
-                db.collection("Examen1").doc(contPregunta.id).delete();
+                db.collection("Examen3").doc(contPregunta.id).delete();
                 setTimeout(() => { window.location.reload(); }, 2000);
             }
           })

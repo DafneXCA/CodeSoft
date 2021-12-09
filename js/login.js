@@ -27,7 +27,7 @@ const firebaseConfig = {
     var sesion=document.getElementById("Sesion");
     sesion.onclick=function(){
         if(correo.value==""||contraseña.value==""){
-            alert("Llene todos los campos");
+            vacio("Llene todos los campos");
         }else{
             if(Existe(correo.value,contraseña.value)==1){
                 var perfil=Usuario(correo.value,contraseña.value);
@@ -47,12 +47,15 @@ const firebaseConfig = {
                         localStorage.setItem("Nota1",perfil.Descripcion.Nota1);
                         localStorage.setItem("Nota2",perfil.Descripcion.Nota2);
                         localStorage.setItem("Nota3",perfil.Descripcion.Nota3);
-                        location.href="../../index.html";
+                        location.href="../index.html";
+                    }
+                    if(localStorage.getItem("Rol")=="Docente"){
+                        location.href="../index.html";
                     }
                 }
                 
             }else{
-                alert("Datos incorrectos");
+                vacio("Datos incorrectos");
             }
         }
 
@@ -78,6 +81,14 @@ const firebaseConfig = {
         }
         return encontrado;
     }
+    function vacio(texto){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: texto,
+            
+          });
+      }
     
    
     

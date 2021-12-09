@@ -1,5 +1,10 @@
 
-
+var n1= document.getElementById("N1");
+var n2= document.getElementById("N2");
+var n3= document.getElementById("N3");
+n1.style.display="none";
+n2.style.display="none";
+n3.style.display="none";
 /*----------------Base de datos------------------------------------*/
   // Import the functions you need from the SDKs you need
   const firebaseConfig = {
@@ -42,39 +47,40 @@ Editar.onclick=function(){
         Editar.innerHTML="Guardar cambios";
         Cancelar.style.display="inline";
     }else{
+        var mensaje="";
         var aceptado=0;
         if(nombreE.value=="" || contraseñaE.value == ""){
             aceptado=1
-            alert("Llene todos los espacios vacíos");
+            mensaje+="Llene todos los espacios vacíos<br>";
         }
         if(nombreE.value.length<6){
             if(nombreE.value!=""){
-                alert("Nombre muy corto");
+                mensaje+="Nombre muy corto<br>";
             }
             aceptado=1;
         }
         if(nombreE.value.length>40){
             if(nombreE.value!=""){
-                alert("Nombre muy largo");
+                mensaje+="Nombre muy largo<br>";
             }
             aceptado=1;
         }
         if(/^[A-Za-z\s]+$/.test(nombreE.value)){   
         }else{
             if(nombreE.value!=""){
-            alert("Nombre no valido");
+                mensaje+="Nombre no valido<br>";
             }
             aceptado=1;
         }
         if(contraseñaE.value.length<8){
             if(contraseñaE.value!=""){
-                alert("Constraseña muy corta");
+                mensaje+="Constraseña muy corta<br>";
             }
             aceptado=1;
         }
         if(contraseñaE.value.length>20){
             if(contraseñaE.value!=""){
-                alert("Constraseña muy larga");
+                mensaje+="Constraseña muy larga<br>";
             }
             aceptado=1;
         }
@@ -89,7 +95,7 @@ Editar.onclick=function(){
             localStorage.setItem("Contraseña",contraseñaE.value);
             setTimeout(()=>{window.location.reload();},2000); 
             
-        }
+        }else{html(mensaje)}
     }
 
 }
@@ -106,13 +112,58 @@ Cancelar.style.display="none";
 
 var Eliminar=document.getElementById("Eliminar");
 Eliminar.onclick=function(){
-    var confirmacion=confirm("¿Estas seguro de borrar su Cuenta?\nUna vez borrada la cuenta no podrá recuperarla");
-        if(confirmacion){
+    Swal.fire({
+        title: '¿Seguro que quiere eliminar?',
+        text: "No podrá recuperar el contenido",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si,quiero eliminarlo',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
             db.collection("Usuarios").doc(localStorage.getItem("Id")).delete(); 
         
-        setTimeout(()=>{
-            localStorage.clear();
-            location.href="../../index.html";
-        },2000); 
+            setTimeout(()=>{
+                localStorage.clear();
+                location.href="../index.html";
+            },2000);  
         }
+      })
+    
 }
+if(localStorage.getItem("Nivel1")=="SI" && Number(localStorage.getItem("Nota1"))>50){
+    n1.style.display="inline";
+}
+if(localStorage.getItem("Nivel2")=="SI" && Number(localStorage.getItem("Nota2"))>50){
+    n2.style.display="inline";
+}
+if(localStorage.getItem("Nivel3")=="SI" && Number(localStorage.getItem("Nota3"))>50){
+    n3.style.display="inline";
+}
+var nota1= document.getElementById("nota1");
+var nota2= document.getElementById("nota2");
+var nota3= document.getElementById("nota3");
+nota1.style.display="none";
+nota2.style.display="none";
+nota3.style.display="none";
+if(localStorage.getItem("Nivel1")=="SI"){
+    nota1.style.display="block";
+    nota1.innerHTML+="  "+ localStorage.getItem("Nota1")+ " puntos";
+}
+if(localStorage.getItem("Nivel2")=="SI"){
+    nota2.style.display="block";
+    nota2.innerHTML+= "  "+localStorage.getItem("Nota2")+ " puntos";
+}
+if(localStorage.getItem("Nivel3")=="SI"){
+    nota3.style.display="inline";
+    nota3.innerHTML+= "  "+localStorage.getItem("Nota3")+ " puntos";
+}
+function html(men){
+    Swal.fire({
+      title: 'Error',
+      icon: 'error',
+      html: men
+    })
+  }

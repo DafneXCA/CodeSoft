@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0, user-scalable=no" />
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="../css/perfilEst.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
   <script type="text/javascript" src="../js/prefixfree.min.js"></script>
@@ -18,6 +17,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
   <script type="text/javascript" src="../js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../js/prefixfree.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>Perfil Estudiante | Contabilidad para todos</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
@@ -45,7 +45,7 @@
                   <p class="Home">Inicio</p>
                 </a>
           </div>
-
+        </header>
           <!-- FIN DEL HEADER -->
 
           <!-- SECCIÓN PERFIL DE ESTUDIANTE -->
@@ -60,15 +60,23 @@
               <label>Contraseña:</label><label id="Contraseña"></label> <input type="text" id="ContraseñaE">
               <br>
               <label>Correo:    </label><label id="Correo"></label>
+              
+              <label id="nota1">Su nota del primer nivel es:</label> 
+              
+              <label id="nota2">Su nota del segundo nivel es:</label>
+              
+              <label id="nota3">Su nota del tercer nivel es:</label>
               <br>
               <br>
               <label id="Eliminar" >Eliminar cuenta</label>
               <label id="Cancelar"> Cancelar</label>
               <label id="Editar">Editar datos</label>
-              
-
             </div>
-
+            <div id="insignias">
+              <img src="../img/insignias/Nivel1.png" alt="" class="insignia" id="N1">
+              <img src="../img/insignias/Nivel2.png" alt="" class="insignia" id="N2">
+              <img src="../img/insignias/Nivel3.png" alt="" class="insignia" id="N3">
+            </div>
 
 
           </section>

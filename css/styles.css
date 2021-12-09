@@ -61,7 +61,8 @@ h3{
 
 .iconIniciar{ 
     color: #ffffff;
-    padding-right: 10px;
+    padding-right: 0px;
+    padding-left: 15px;
     
 }
 
@@ -468,6 +469,9 @@ footer{
     padding-right: 10px;
     padding-left: 10px;
 }
+#NombreUsuario:hover{
+    color: #ffc400;
+}
 #CerrarSesion{
     color:  white;
 }
@@ -483,6 +487,9 @@ body{
 footer{
     text-align: center;
    
+}
+#Registrarse{
+    margin-right: 10px;
 }
 
 

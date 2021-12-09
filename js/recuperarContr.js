@@ -91,14 +91,14 @@ let regexNombre=/^[A-Za-z\s]+$/
     var mensaje= ""  
     if(name.value.length<1 && email.value.length<1){
       parrafo.innerHTML="Ingrese todos los espacios vacíos"
-      window.alert("Ingrese todos los espacios vacíos");
+      vacio("Ingrese todos los espacios vacíos");
       entrar=true;
       res=true;
     }
     if(name.value.length<1 || email.value.length<1){
       if(entrar==false){
       mensaje=mensaje+"*Ingrese todos los espacios vacíos <br>"
-      window.alert("Ingrese todos los espacios vacíos");
+      
       res=true;
       }
     }
@@ -113,21 +113,21 @@ let regexNombre=/^[A-Za-z\s]+$/
     */
     if(name.value.length>40 && entrar==false){
       mensaje=mensaje+"*Nombre muy largo <br> "
-      window.alert("Nombre muy largo");
+      
       res=true;
   
     }
     if(!regexNombre.test(name.value) && entrar==false ){
       if(name.value!=""){
         mensaje=mensaje+"*No ingrese Caracteres especiales o numéricos en Nombre <br>"
-      window.alert("No ingrese Caracteres especiales o numéricos en Nombre");
+      
       }
       res=true;
     }
     if(name.value.length <6 && entrar==false){
       if(name.value!=""){
         mensaje=mensaje+"*Nombre muy corto <br> "      
-        window.alert("Nombre muy corto");
+        
       }
         res=true;
     }
@@ -135,12 +135,13 @@ let regexNombre=/^[A-Za-z\s]+$/
     if(!regexEmail.test(email.value) && entrar==false){
       if(email.value!=""){
         mensaje=mensaje+"*El email no es valido<br> "    
-        window.alert("El email no es valido");
+        
       }
         res=true;
     }
     if(entrar==false){
-      parrafo.innerHTML = mensaje 
+      parrafo.innerHTML = mensaje
+      html(mensaje); 
       } 
   
     if(res==false) {
@@ -152,7 +153,7 @@ let regexNombre=/^[A-Za-z\s]+$/
       }
       else{
         parrafo.innerHTML = "El Usuario no existe";
-        window.alert("El Usuario no existe");
+        vacio("El Usuario no existe");
       }
     }
   
@@ -176,3 +177,19 @@ function Existe2(a){
   }
   return encontrado;
 }
+function vacio(texto){
+  Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: texto,
+      
+    });
+}
+function html(men){
+  Swal.fire({
+    title: 'Error',
+    icon: 'error',
+    html: men
+  })
+}
+
