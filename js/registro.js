@@ -53,11 +53,11 @@ Registrar.onclick=function(){
             errores[5].style.display="none";
         }else{if(nombre.value!=""){errores[5].style.display="block";mensajes=mensajes+errores[5].innerHTML+"<br>"}
         Aceptar=1;}
-        if(nombre.value.length<6){
+        if(ContarCar(nombre.value)<3){
             if(nombre.value!=""){errores[6].style.display="block"; mensajes=mensajes+errores[6].innerHTML+"<br>"}
             Aceptar=1;
         }else{errores[6].style.display="none";}
-        if(nombre.value.length>40){
+        if(ContarCar(nombre.value)>40){
             errores[7].style.display="block"; mensajes=mensajes+errores[7].innerHTML+"<br>"
             Aceptar=1;
         }else{errores[7].style.display="none";}
@@ -88,7 +88,7 @@ Registrar.onclick=function(){
     if(Aceptar==0){
         if(Existe(correo.value)==0 ){
             console.log(Usuarios);
-            let Nombre= nombre.value;
+            let Nombre= Comprimir(nombre.value);
             let Correo= correo.value;
             let Contraseña= contraseña.value;
             let Rol="Estudiante";
@@ -155,6 +155,25 @@ Registrar.onclick=function(){
       icon: 'error',
       html: men
     })
+  }
+  function ContarCar(Cadena){
+    var con=0;
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            con++;
+        }
+        console.log(Cadena[i]);
+    }
+    return con;
+  }
+  function Comprimir(Cadena){
+    var compreso="";
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            compreso+=Cadena[i];
+        }
+    }
+    return compreso;
   }
 
  

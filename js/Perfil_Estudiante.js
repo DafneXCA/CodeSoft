@@ -45,7 +45,12 @@ Editar.onclick=function(){
         nombre.style.display="none";
         contraseña.style.display="none";
         Editar.innerHTML="Guardar cambios";
-        Cancelar.style.display="inline";
+        if(window.innerWidth>376){
+            Cancelar.style.display="inline";
+        }else{
+            Cancelar.style.display="block";
+        }
+        
     }else{
         var mensaje="";
         var aceptado=0;
@@ -68,19 +73,19 @@ Editar.onclick=function(){
         if(/^[A-Za-z\s]+$/.test(nombreE.value)){   
         }else{
             if(nombreE.value!=""){
-                mensaje+="Nombre no valido<br>";
+                mensaje+="Nombre no válido<br>";
             }
             aceptado=1;
         }
         if(contraseñaE.value.length<8){
             if(contraseñaE.value!=""){
-                mensaje+="Constraseña muy corta<br>";
+                mensaje+="Contraseña muy corta<br>";
             }
             aceptado=1;
         }
         if(contraseñaE.value.length>20){
             if(contraseñaE.value!=""){
-                mensaje+="Constraseña muy larga<br>";
+                mensaje+="Contraseña muy larga<br>";
             }
             aceptado=1;
         }
@@ -119,7 +124,7 @@ Eliminar.onclick=function(){
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si,quiero eliminarlo',
+        confirmButtonText: 'Sí,quiero eliminarlo',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -166,4 +171,7 @@ function html(men){
       icon: 'error',
       html: men
     })
+  }
+  window.onresize= function(){
+    window.location.reload();
   }

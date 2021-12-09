@@ -63,7 +63,7 @@ let regexNombre=/^[A-Za-z\s]+$/
 
 
   $("#btnsave").on('click',()=>{
-    let Nombre = $("#nombre").val();
+    let Nombre = Comprimir($("#nombre").val());
     let Correo = $("#correo").val();
     let Contraseña = $("#contraseña").val();
     //Antes habia la variable de la repeticion de la contraseña 
@@ -107,13 +107,13 @@ let regexNombre=/^[A-Za-z\s]+$/
       }
       res=true;
     }
-    if(name.value.length>40 && entrar==false){
+    if(ContarCar(name.value)>40 && entrar==false){
       mensaje=mensaje+"*Nombre muy largo <br> "
       
       res=true;
   
     }
-    if(name.value.length <6 && entrar==false){
+    if(ContarCar(name.value) <3 && entrar==false){
       if(name.value!=""){
         mensaje=mensaje+"*Nombre muy corto <br> "      
         
@@ -209,3 +209,49 @@ function html(men){
     html: men
   })
 }
+function YaExiste(){
+  Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Ya existe un usuario con ese correo',
+      
+    });
+}
+function ContarCar(Cadena){
+  var con=0;
+  for(var i=0; i<Cadena.length;i++){
+      if(Cadena[i]!=" "){
+          con++;
+      }
+      console.log(Cadena[i]);
+  }
+  return con;
+}
+function Comprimir(Cadena){
+  var compreso="";
+  for(var i=0; i<Cadena.length;i++){
+      if(Cadena[i]!=" "){
+          compreso+=Cadena[i];
+      }
+  }
+  return compreso;
+}
+function ContarCar(Cadena){
+    var con=0;
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            con++;
+        }
+        console.log(Cadena[i]);
+    }
+    return con;
+  }
+  function Comprimir(Cadena){
+    var compreso="";
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            compreso+=Cadena[i];
+        }
+    }
+    return compreso;
+  }

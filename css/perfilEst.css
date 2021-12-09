@@ -267,3 +267,41 @@ label{
 a{
     text-decoration: none;
 }
+@media (max-width: 376px) { 
+#Eliminar{
+    margin-top: 20px;
+    display: block;
+    width: 150px;
+}
+  #Editar{
+    margin-top: 20px;
+      display: block;
+      width: 150px;
+  }
+  #Cancelar {
+      margin-top: 20px;
+      display: block;
+      width: 150px;
+  }
+  .logo{
+      width: 50px;
+  }
+  .tituloPlataforma{
+      font-size: 11px;
+  }
+  .IconHome {
+      font-size: 20px;
+  }
+  .Home {
+      font-size: 12px;
+  }
+  h1{
+      font-size: 20px;
+  }
+  h2{
+      font-size:15px ;
+  }
+  label{
+      font-size: 12px;
+  }
+}

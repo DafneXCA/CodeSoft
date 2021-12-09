@@ -38,10 +38,24 @@ db.collection("Usuarios").get().then((querySnapshot)=>{
 });
 //borrar datos
 function eliminar(id){
-db.collection("Usuarios").doc(id).delete().then(function(){
-    console.log("Se pudo borrar correctamente");
-    location.href="../public/reportesEst.html";
-}).catch(function(error){
-    console.error("Error removing document:",error);
-});
+  Swal.fire({
+    title: '¿Seguro que quiere eliminar?',
+    text: "No podrá recuperar el contenido",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí,quiero eliminarlo',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      db.collection("Usuarios").doc(id).delete().then(function(){
+        console.log("Se pudo borrar correctamente");
+        location.href="../public/reportesEst.html";
+    }).catch(function(error){
+        console.error("Error removing document:",error);
+    });
+    }
+  })
+
 }

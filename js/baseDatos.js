@@ -2,6 +2,9 @@ var LisTemas= [];
 var indice = document.getElementById("IND");
 var nuevoTema= document.getElementById("Nuevo tema");
 var Nivel= document.getElementById("cont");
+if(localStorage.getItem("Rol")=="Estudiante"){
+    nuevoTema.style.display="none";
+}
 /*----------------Base de datos------------------------------------*/
   // Import the functions you need from the SDKs you need
   const firebaseConfig = {
