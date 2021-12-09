@@ -61,19 +61,18 @@ var Nivel= document.getElementById("cont");
         Tema.appendChild(Titulo);
         indice.insertBefore(Tema,nuevoTema);
         //Botones
+
         if(localStorage.getItem("Rol")!="Estudiante"){
-        botonEditar(Tema);
-        botonBorrar(Tema);
-        botonAñadir(Tema);
+            botonEditar(Tema);
+            botonBorrar(Tema);
+            botonAñadir(Tema);
         }
         var tituloAux=document.createElement("input");
         tituloAux.type="text";
         tituloAux.value=Titulo.innerHTML;
         Tema.appendChild(tituloAux);
-        if(localStorage.getItem("Rol")!="Estudiante"){
         botonAceptarEdicion(Tema);
         botonCancelarEdicion(Tema);
-        }
         tituloAux.style.display="none"
         var ID= document.createElement("label");
         ID.innerHTML=LisTemas[i].Descripcion.ID;
@@ -112,12 +111,22 @@ var Nivel= document.getElementById("cont");
     Borrar.className="BotonBorrar";
     tema.appendChild(Borrar);
     Borrar.onclick=function(){
-        var confirmacion=confirm("¿Estas seguro de borrar este Tema?\nUna vez borrado no podrá recuperar el contenido");
-        if(confirmacion){
-            db.collection("Temas1").doc(tema.id).delete(); 
-        setTimeout(()=>{window.location.reload();},2000); 
-        }
+        Swal.fire({
+            title: '¿Seguro que quiere eliminar?',
+            text: "No podra revertil los cambios",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si,quiero eliminarlo',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                db.collection("Temas1").doc(tema.id).delete(); 
         
+                setTimeout(()=>{window.location.reload();},2000); 
+            }
+          });
     }
  }
  /*---------------------------Boton Añadir-------------------------------------------------------*/
@@ -145,7 +154,7 @@ function botonAceptarEdicion(tema){
             setTimeout(()=>{window.location.reload();},2000); 
         }else{
             
-            alert("No se puede actualizar el tema");
+            vacio("No se puede actualizar el tema");
         }
 
     }
@@ -195,7 +204,7 @@ function botonCancelarEdicion(tema){
             nuevoTema.style.display="block";
             setTimeout(()=>{window.location.reload();},2000);//Necesario para que la base guarde los cambios   
         }else{
-            alert("No es posible añadir el tema");
+            vacio("No es posible añadir el tema");
         }
     }
     /*-------------------Boton cancelar-------------------------*/
@@ -235,7 +244,7 @@ function botonCancelarEdicion(tema){
            tema.childNodes[1].style="inline";
           }else{
             
-           alert("No es posible añadir tema");
+           vacio("No es posible añadir tema");
           }
 
        }
@@ -263,7 +272,14 @@ function botonCancelarEdicion(tema){
  }
  
  /*--------------------------------------------------------*/
-
+ function vacio(texto){
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: texto
+        
+      });
+  }
 
 
 

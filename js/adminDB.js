@@ -45,7 +45,7 @@ const firebaseConfig = {
   const MJSOK =()=>{
     Swal.fire(
       'Buen trabajo!',
-      'Datos guardados correctamente!',
+      'Administrador registrado correctamente',
       'success'
     )
   }
@@ -89,7 +89,7 @@ let regexNombre=/^[A-Za-z\s]+$/
     var mensaje= ""  
     if(name.value.length<1 && email.value.length<1 && pasword.value.length<1 && pasword2.value.length<1){
       parrafo.innerHTML="Ingrese todos los espacios vacíos"
-      vacio("Ingrese todos los espacios vacíos");
+      vacio();
       entrar=true;
       res=true;
     }
@@ -109,7 +109,7 @@ let regexNombre=/^[A-Za-z\s]+$/
     }
     if(name.value.length>40 && entrar==false){
       mensaje=mensaje+"*Nombre muy largo <br> "
-      window.alert("Nombre muy largo");
+      
       res=true;
   
     }
@@ -163,14 +163,14 @@ let regexNombre=/^[A-Za-z\s]+$/
         res=true;
     }
     if(entrar==false){
-    parrafo.innerHTML = mensaje 
-    html(mensaje);
+    parrafo.innerHTML = mensaje
+    
     }  
     if(res==false) {
     //Aqui comprueba si existe un usuario con ese correo
     if(Existe(email.value)==0){
       parrafo.innerHTML = ""
-      window.alert("Registrado Correctamente");
+      
       res=true;
       name.value=""
       email.value=""
@@ -178,10 +178,10 @@ let regexNombre=/^[A-Za-z\s]+$/
       pasword2.value=""
       SaveAdmin(Usuario);
       }else{
-        alert("Ya existe ese usuario");
+        YaExiste();
         parrafo.innerHTML = "El usuario ya existe"
       }
-    }
+    }else{html(mensaje)}
   
   })
   //Esta funcion es la que recorre la lista de usuarios para saber si ya existe
@@ -194,11 +194,11 @@ let regexNombre=/^[A-Za-z\s]+$/
     }
     return encontrado;
 }
-function vacio(texto){
+function vacio(){
   Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: texto,
+      text: 'Llene todos los campos',
       
     });
 }
