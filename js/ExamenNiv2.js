@@ -328,7 +328,7 @@ db.collection("Examen2").get().then(function (BaseExamen1) {
         var mensaje= document.createElement("div");
         mensaje.style.color="#ffffff";
         mensaje.className="pm";
-        mensaje.innerHTML="Usted ya rindio el examen del Nivel 2";
+        mensaje.innerHTML="Usted ya rindió el examen del Nivel 2";
         mensaje.id="mensaje";
         cont.appendChild(mensaje);
     }

@@ -358,6 +358,7 @@ function AceptarEI(contenedor) {
                     });
     
                 });
+                
              }else{
                  vacio("Formato de imagen no aceptado");
              }
@@ -740,7 +741,7 @@ function Borrar(subtema) {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si,quiero eliminarlo',
+            confirmButtonText: 'Sí,quiero eliminarlo',
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
