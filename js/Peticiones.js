@@ -32,32 +32,34 @@ function GuardarSolicitud(Solicitud){
 /*-----------------------------------*/
 
 Enviar.onclick=function(){
+    var mensajes="";
     var Aceptar=0; 
     emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     if(nombre.value==""||correo.value==""||descripcion.value==""){
-        vacio("Llene todos los campos vacíos");
+        mensajes=mensajes+ "Llene todos los campos vacíos<br>";
+
         Aceptar=1;
     }
         if(/^[A-Za-z\s]+$/.test(nombre.value)){
             errores[4].style.display="none";
-        }else{if(nombre.value!=""){errores[3].style.display="block";}
+        }else{if(nombre.value!=""){errores[3].style.display="block"; mensajes=mensajes+errores[3].innerHTML+"<br>"}
         Aceptar=1;}
-        if(nombre.value.length<6){
-            if(nombre.value!=""){errores[4].style.display="block";}
+        if(ContarCar(nombre.value)<3){
+            if(nombre.value!=""){errores[4].style.display="block"; mensajes=mensajes+errores[4].innerHTML+"<br>"}
             Aceptar=1;
         }else{errores[4].style.display="none";}
-        if(nombre.value.length>40){
-            errores[5].style.display="block";
+        if(ContarCar(nombre.value)>40){
+            errores[5].style.display="block"; mensajes=mensajes+errores[5].innerHTML+"<br>"
             Aceptar=1;
         }else{errores[5].style.display="none";}
         errores[0].style.display="none";
         if(descripcion.value.length>150 ){
-            errores[2].style.display="block";
+            errores[2].style.display="block";mensajes=mensajes+errores[2].innerHTML+"<br>"
             Aceptar=1;
             }else{errores[2].style.display="none";}
         if(!emailRegex.test(correo.value)){
                 if(correo.value!=""){
-                    errores[1].style.display="block";
+                    errores[1].style.display="block"; mensajes=mensajes+errores[1].innerHTML+"<br>"
                 }
                 Aceptar=1;
             }else{errores[1].style.display="none";}
@@ -70,7 +72,9 @@ Enviar.onclick=function(){
         const Peticion={Nombre,Correo,Categoria,Descripcion};
         console.log(Peticion);
         GuardarSolicitud(Peticion);
-        vacio("La petición se registró correctamente");  
+        bien("La petición se registró correctamente");  
+    }else{
+        html(mensajes);
     }
 
  }    
@@ -81,4 +85,28 @@ Enviar.onclick=function(){
         text: texto,
         
       });
+  }
+  function bien(texto){
+    Swal.fire({
+        title: 'Buen trabajo',
+        icon: 'success',
+        text: texto
+      })
+  }
+  function ContarCar(Cadena){
+    var con=0;
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            con++;
+        }
+        console.log(Cadena[i]);
+    }
+    return con;
+  }
+  function html(men){
+    Swal.fire({
+      title: 'Error',
+      icon: 'error',
+      html: men
+    })
   }

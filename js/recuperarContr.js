@@ -1,3 +1,10 @@
+if(localStorage.getItem("Sesion")=="Activo"){
+  if(localStorage.getItem("Rol")=="Administrador"){
+    location.href="../public/IndexAdmonistrador.html";
+  }else{
+    location.href="../index.html";
+  }
+}
 //Este arreglo es para ver si el usuario ya existe
 var Usuarios=[];
 // @jhon coneccion con la base de datods
@@ -124,7 +131,7 @@ let regexNombre=/^[A-Za-z\s]+$/
       }
       res=true;
     }
-    if(name.value.length <6 && entrar==false){
+    if(name.value.length <3 && entrar==false){
       if(name.value!=""){
         mensaje=mensaje+"*Nombre muy corto <br> "      
         
@@ -141,7 +148,10 @@ let regexNombre=/^[A-Za-z\s]+$/
     }
     if(entrar==false){
       parrafo.innerHTML = mensaje
-      html(mensaje); 
+      if(res==true){
+        html(mensaje); 
+      }
+      
       } 
   
     if(res==false) {
