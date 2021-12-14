@@ -1,3 +1,4 @@
+
 if(localStorage.getItem("Rol")!="Administrador"){
     location.href="../index.html";
 }

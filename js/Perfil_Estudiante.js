@@ -1,4 +1,6 @@
-
+if(localStorage.getItem("Sesion")=="inactivo"){
+    location.href="../index.html";
+}
 var n1= document.getElementById("N1");
 var n2= document.getElementById("N2");
 var n3= document.getElementById("N3");
@@ -45,7 +47,7 @@ Editar.onclick=function(){
         nombre.style.display="none";
         contraseña.style.display="none";
         Editar.innerHTML="Guardar cambios";
-        if(window.innerWidth>376){
+        if(window.innerWidth>408){
             Cancelar.style.display="inline";
         }else{
             Cancelar.style.display="block";
@@ -58,13 +60,13 @@ Editar.onclick=function(){
             aceptado=1
             mensaje+="Llene todos los espacios vacíos<br>";
         }
-        if(nombreE.value.length<6){
+        if(ContarCar(nombreE.value)<3){
             if(nombreE.value!=""){
                 mensaje+="Nombre muy corto<br>";
             }
             aceptado=1;
         }
-        if(nombreE.value.length>40){
+        if(ContarCar(nombreE.value)>40){
             if(nombreE.value!=""){
                 mensaje+="Nombre muy largo<br>";
             }
@@ -91,12 +93,12 @@ Editar.onclick=function(){
         }
         if(aceptado==0){
             db.collection("Usuarios").doc(localStorage.getItem("Id")).update({
-                Usuario:{Nombre: nombreE.value,Correo: localStorage.getItem("Correo"),Contraseña: contraseñaE.value,
+                Usuario:{Nombre: Comprimir(nombreE.value),Correo: localStorage.getItem("Correo"),Contraseña: contraseñaE.value,
             Rol: "Estudiante", Nivel1: localStorage.getItem("Nivel1"), Nivel2: localStorage.getItem("Nivel2"),
             Nivel3: localStorage.getItem("Nivel3"),Nota1: localStorage.getItem("Nota1"),Nota2: localStorage.getItem("Nota2"),
             Nota3: localStorage.getItem("Nota3")}
             })
-            localStorage.setItem("Nombre",nombreE.value);
+            localStorage.setItem("Nombre",Comprimir(nombreE.value));
             localStorage.setItem("Contraseña",contraseñaE.value);
             setTimeout(()=>{window.location.reload();},2000); 
             
@@ -174,4 +176,23 @@ function html(men){
   }
   window.onresize= function(){
     window.location.reload();
+  }
+  function ContarCar(Cadena){
+    var con=0;
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            con++;
+        }
+        console.log(Cadena[i]);
+    }
+    return con;
+  }
+  function Comprimir(Cadena){
+    var compreso="";
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            compreso+=Cadena[i];
+        }
+    }
+    return compreso;
   }

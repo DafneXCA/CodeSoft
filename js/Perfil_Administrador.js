@@ -1,3 +1,6 @@
+if(localStorage.getItem("Sesion")=="inactivo"){
+      location.href="../index.html";
+  }
 /*----------------Base de datos------------------------------------*/
 // Import the functions you need from the SDKs you need
 const firebaseConfig = {
@@ -39,7 +42,7 @@ Editar.onclick=function(){
         nombre.style.display="none";
         contraseña.style.display="none";
         Editar.innerHTML="Guardar cambios";
-        if(window.innerWidth>376){
+        if(window.innerWidth>408){
             Cancelar.style.display="inline";
         }else{
             Cancelar.style.display="block";
@@ -50,13 +53,13 @@ Editar.onclick=function(){
             aceptado=1
             mensaje+="Llene todos los espacios vacíos<br>";
         }
-        if(nombreEdit.value.length<6){
+        if(ContarCar(nombreEdit.value)<3){
             if(nombreEdit.value!=""){
                 mensaje+="Nombre muy corto<br>";
             }
             aceptado=1;
         }
-        if(nombreEdit.value.length>40){
+        if(ContarCar(nombreEdit.value)>40){
             if(nombreEdit.value!=""){
                 mensaje+="Nombre muy largo<br>";
             }
@@ -83,10 +86,10 @@ Editar.onclick=function(){
         }
         if(aceptado==0){
             db.collection("Usuarios").doc(localStorage.getItem("Id")).update({
-                Usuario:{Nombre: nombreEdit.value,Correo: localStorage.getItem("Correo"),Contraseña: contraseñaEdit.value,
+                Usuario:{Nombre: Comprimir(nombreEdit.value),Correo: localStorage.getItem("Correo"),Contraseña: contraseñaEdit.value,
             Rol: "Administrador"}
             })
-            localStorage.setItem("Nombre",nombreEdit.value);
+            localStorage.setItem("Nombre",Comprimir(nombreEdit).value);
             localStorage.setItem("Contraseña",contraseñaEdit.value);
             setTimeout(()=>{window.location.reload();},2000); 
             
@@ -139,3 +142,23 @@ function html(men){
   window.onresize= function(){
     window.location.reload();
   }
+  function ContarCar(Cadena){
+    var con=0;
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            con++;
+        }
+        console.log(Cadena[i]);
+    }
+    return con;
+  }
+  function Comprimir(Cadena){
+    var compreso="";
+    for(var i=0; i<Cadena.length;i++){
+        if(Cadena[i]!=" "){
+            compreso+=Cadena[i];
+        }
+    }
+    return compreso;
+  }
+  

@@ -1,5 +1,9 @@
 
-
+if(localStorage.getItem("Sesion")=="Activo"){
+    if(localStorage.getItem("Rol")=="Administrador"){
+      location.href="public/IndexAdmonistrador.html";
+    }
+  }
 var Usuarios=[];
 /*----------------Base de datos------------------------------------*/
   // Import the functions you need from the SDKs you need

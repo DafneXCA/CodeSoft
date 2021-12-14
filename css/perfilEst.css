@@ -267,7 +267,7 @@ label{
 a{
     text-decoration: none;
 }
-@media (max-width: 376px) { 
+@media (max-width: 408px) { 
 #Eliminar{
     margin-top: 20px;
     display: block;

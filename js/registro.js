@@ -1,3 +1,10 @@
+if(localStorage.getItem("Sesion")=="Activo"){
+    if(localStorage.getItem("Rol")=="Administrador"){
+      location.href="../public/IndexAdmonistrador.html";
+    }else{
+      location.href="../index.html";
+    }
+  }
 var Usuarios=[];
 var errores=document.getElementsByClassName("alerta");
 for(var i=0;i<errores.length;i++){
