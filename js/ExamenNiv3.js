@@ -4,7 +4,7 @@ var Preguntas = [];
 var cont = document.getElementById("cont");
 var storageRef = storage.ref();
 var BAceptar = document.createElement("button");
-
+BAceptar.className="BAceptar";
 var Titulo = document.createElement("h2");
 Titulo.innerHTML = "EXAMEN";
 
@@ -114,7 +114,7 @@ if (localStorage.getItem("Rol") == "Estudiante") {
         
     }
 }else{
-    BAceptar.innerHTML = "Aceptar";
+    BAceptar.innerHTML = "Guardar";
     BAceptar.onclick = function () {
         var PreguntasOb = examen.getElementsByClassName("Pregunta");
         //console.log(PreguntasOb);
@@ -357,7 +357,7 @@ function CargarPreguntas() {
                 var imagen = document.createElement("input");
                 imagen.type = "file";
                 imagen.setAttribute('accept', 'image/*');
-                imagen.addEventListener('change', mostrar, 'false');
+                imagen.addEventListener('change', mostrar1, 'false');
                 var contNimg = document.createElement("div");
 
                 var nimg = document.createElement("img");
@@ -495,7 +495,7 @@ function BEditar(contPregunta) {
                 vacio1("No hay imagenes que eliminar");
             }
         }
-        img.addEventListener('change', mostrar, 'false');
+        img.addEventListener('change', mostrar1, 'false');
 
         var e3 = document.createElement("textarea");
         var auxRes = "";
@@ -727,7 +727,7 @@ function BEliminar(contPregunta) {
 
 }
 //------------------mostrar imagen--------------------
-function mostrar(a) {
+function mostrar1(a) {
     
     var file = a.target.files[0];
     var reader = new FileReader();
