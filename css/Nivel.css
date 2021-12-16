@@ -352,19 +352,23 @@ label{
 .BotonAceptar::before{
     font-family: 'Material Icons';
     content: "\e92d";
-    color: #06d6a0;
+   
     cursor: pointer;
     font-size: 25px;
     transition: 0.3s;
+     -webkit-text-fill-color: #acacac;
+    -webkit-text-stroke: 1px #181b32d6;
 }
 
 .BotonCancelar::before{
     font-family: 'Material Icons';
     content: "\e888";
-    color: #ef233c;
+    
     cursor: pointer;
     font-size: 25px;
     transition: 0.3s;
+    -webkit-text-fill-color: #acacac;
+    -webkit-text-stroke: 1px #181b32d6;
 }
 
 .BotonAñadir:hover::before{
