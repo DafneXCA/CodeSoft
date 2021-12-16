@@ -241,6 +241,28 @@ strong{
     
 }
 
+.BAceptar{
+    border:none;
+    display: block;
+    background: white ;
+    border-radius: 40px;
+    padding: 10px;
+    border:solid 1px black;
+   margin-left:90% ;
+    
+  cursor: pointer;
+ 
+  text-align: center;
+ 
+  transition: all 0.2s ease 0s;
+  box-shadow: 0 1px 1px #8d8d8d, 1px 3px 0 #868686, 0px 2px 3px rgba(0,0,0,0.4), inset 0px 1px 3px rgba(255,255,255,0.2), inset 0 -1px 2px rgba(0,0,0,0.2);
+ 
+}
+
+.BAceptar:hover{
+    background: #65abda;
+}
+
 .pm{
     margin: 10%;
 }
@@ -330,19 +352,23 @@ label{
 .BotonAceptar::before{
     font-family: 'Material Icons';
     content: "\e92d";
-    color: #06d6a0;
+   
     cursor: pointer;
     font-size: 25px;
     transition: 0.3s;
+     -webkit-text-fill-color: #acacac;
+    -webkit-text-stroke: 1px #181b32d6;
 }
 
 .BotonCancelar::before{
     font-family: 'Material Icons';
     content: "\e888";
-    color: #ef233c;
+    
     cursor: pointer;
     font-size: 25px;
     transition: 0.3s;
+    -webkit-text-fill-color: #acacac;
+    -webkit-text-stroke: 1px #181b32d6;
 }
 
 .BotonAñadir:hover::before{
