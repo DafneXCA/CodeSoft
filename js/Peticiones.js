@@ -88,7 +88,7 @@ Enviar.onclick=function(){
   }
   function bien(texto){
     Swal.fire({
-        title: 'Buen trabajo',
+        title: '¡Buen trabajo!',
         icon: 'success',
         text: texto
       })

@@ -57,7 +57,7 @@ db.collection("Usuarios").get().then(function(BaseUsuarios){
 
   const MJSOK =()=>{
     Swal.fire(
-      'Buen trabajo!',
+      '¡Buen trabajo!',
       'Datos guardados correctamente!',
       'success'
     )

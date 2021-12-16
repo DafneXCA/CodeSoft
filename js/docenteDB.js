@@ -44,7 +44,7 @@ const firebaseConfig = {
 
   const MJSOK =()=>{
     Swal.fire(
-      'Buen trabajo!',
+      '¡Buen trabajo!',
       'Docente registrado correctamente',
       'success'
     )
