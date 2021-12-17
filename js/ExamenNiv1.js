@@ -670,7 +670,7 @@ function GuardarPregunta2(preguntan, pregCom, id) {
     db.collection("Examen1").doc(id).update({
         pregunta: { Pregunta: pregCom, Respuestas: res, Tipo: preguntan.childNodes[4].value, RespuestaC : resC }
     })
-    setTimeout(() => { window.location.reload(); }, 2000);//Necesario para que la base guarde los cambios
+    setTimeout(() => { window.location.reload(); }, 3000);//Necesario para que la base guarde los cambios
 }
 //----------------------Cancelar Edicion----------------
 function btnCE(contEd, copysrc) {
@@ -845,7 +845,7 @@ function controlF() {
         console.log("********************");
         console.log( preguntConfirm.childNodes[4].value);
         
-   //     console.log(".-. a ver que paso entra a verificar respuestas");
+    console.log(".-. a ver que paso entra a verificar respuestas");
         respt = respt.split("\n");
         var contRes = 0;
         for (var a = 0; a < respt.length - 1; a++) {
@@ -866,7 +866,7 @@ function controlF() {
             var x = respt[m];
             //console.log(x);
             if (/\w/.test(x)) {
-      //          console.log(".-. a ver que paso aqui no debe estar aqui si esta vacio");
+                console.log(".-. a ver que paso aqui no debe estar aqui si esta vacio");
                 contRes++;
                 vacio = vacio + y;
             }
