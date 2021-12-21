@@ -151,7 +151,7 @@ Registrar.onclick=function(){
   
   function bien(){
     Swal.fire({
-        title: 'Buen trabajo',
+        title: '¡Buen trabajo!',
         icon: 'success',
         text: "Registro correcto"
       })
