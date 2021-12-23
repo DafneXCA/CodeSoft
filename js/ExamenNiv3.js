@@ -105,8 +105,8 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             }
 
         })
+        BAceptar.style.display="none";
         
-        setTimeout(()=>{window.location.reload();},2000); 
         }else{
 
            vacio1("No hay preguntas para calificar") ;
@@ -1424,7 +1424,7 @@ function calificar(calif,icono){
     Swal.fire({
         icon: icono,
         
-        html: "Su calificación es:<br>"+calif,
+        html: "Su calificación es:<br>"+calif+"<br>Actualice la pagina cuando termine de revisar sus resultados",
         
       });
 }

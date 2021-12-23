@@ -77,7 +77,7 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             }
             //calificar
             
-            var nota=(100/PregC.length)*calificacion;
+            var nota=Number((100/PregC.length)*calificacion);
             if(nota>50){
                 calificar(nota+"/"+100,"success");
                 setTimeout(()=>{},500); 
@@ -105,8 +105,8 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             }
 
         })
-        
-        setTimeout(()=>{window.location.reload();},2000); 
+        BAceptar.style.display="none";
+         
         }else{
 
            vacio1("No hay preguntas para calificar") ;
@@ -1424,7 +1424,7 @@ function calificar(calif,icono){
     Swal.fire({
         icon: icono,
         
-        html: "Su calificación es:<br>"+calif,
+        html: "Su calificación es:<br>"+calif+"<br>Actualice la pagina cuando termine de revisar sus resultados",
         
       });
 }
