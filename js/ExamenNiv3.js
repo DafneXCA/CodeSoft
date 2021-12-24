@@ -77,7 +77,7 @@ if (localStorage.getItem("Rol") == "Estudiante") {
             }
             //calificar
             
-            var nota=(100/PregC.length)*calificacion;
+            var nota=Math.round((100/PregC.length)*calificacion);
             if(nota>50){
                 calificar(nota+"/"+100,"success");
                 setTimeout(()=>{},500); 
